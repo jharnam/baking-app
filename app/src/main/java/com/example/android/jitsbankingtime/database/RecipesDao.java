@@ -27,10 +27,10 @@ public interface RecipesDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateRecipe(RecipeEntity updateEntry);
 
-    @Query("UPDATE recipes SET is_favorite = 1 WHERE recipe_id = :id:")
+    @Query("UPDATE recipes SET is_favorite = 1 WHERE recipe_id = :id")
     int markFavorite(long id);
 
-    @Query("UPDATE recipes SET is_favorite = 0 WHERE recipe_id = :id:")
+    @Query("UPDATE recipes SET is_favorite = 0 WHERE recipe_id = :id")
     int markNotFavorite(long id);
 
     @Delete

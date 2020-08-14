@@ -1,7 +1,10 @@
 package com.example.android.jitsbankingtime.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+
+import org.jetbrains.annotations.NotNull;
 
 import static androidx.room.ForeignKey.CASCADE;
 
@@ -13,13 +16,14 @@ import static androidx.room.ForeignKey.CASCADE;
 public class IngredientEntity {
     private long recipe_id;
 
+    @NonNull
     private String ingredient_name;
 
     private float quantity;
 
     private String measure;
 
-    public IngredientEntity(long recipe_id, String ingredient_name, float quantity, String measure) {
+    public IngredientEntity(long recipe_id, @NotNull String ingredient_name, float quantity, String measure) {
         this.recipe_id = recipe_id;
         this.ingredient_name = ingredient_name;
         this.quantity = quantity;
@@ -34,11 +38,12 @@ public class IngredientEntity {
         this.recipe_id = recipe_id;
     }
 
+    @NotNull
     public String getIngredient_name() {
         return ingredient_name;
     }
 
-    public void setIngredient_name(String ingredient_name) {
+    public void setIngredient_name(@NotNull String ingredient_name) {
         this.ingredient_name = ingredient_name;
     }
 
