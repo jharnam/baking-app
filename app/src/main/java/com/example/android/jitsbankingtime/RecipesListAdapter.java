@@ -47,7 +47,16 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
 
     public void setRecipesList(List<Recipe> recipesListForAdapter) {
         Timber.d("inside setRecipesList");
+        //TODO - check if the following addAll is better
+        //recipesList.addAll(recipesListForAdapter);
         recipesList = recipesListForAdapter;
+        notifyDataSetChanged();
+    }
+
+    /* Clean all elements of the recycler */
+    public void clearList() {
+        Timber.d("clearing the list");
+        recipesList.clear();
         notifyDataSetChanged();
     }
 
