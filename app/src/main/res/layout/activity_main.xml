@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             tools:context=".MainActivity"
 
-            tools:listitem="@layout/item_recipe" />
+            tools:listitem="@layout/item_main_recipe" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
