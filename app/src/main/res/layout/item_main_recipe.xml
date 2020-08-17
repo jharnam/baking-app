@@ -24,8 +24,7 @@
                 android:contentDescription="Thumbnail of the recipe picture"
                 android:scaleType="center"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/recipe_placeholder_icon" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
 
             <TextView
