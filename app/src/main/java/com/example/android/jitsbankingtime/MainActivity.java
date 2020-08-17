@@ -1,6 +1,7 @@
 package com.example.android.jitsbankingtime;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.android.jitsbankingtime.api.ApiClient;
+import com.example.android.jitsbankingtime.databinding.ActivityMainBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
 
 import java.util.ArrayList;
@@ -26,61 +28,28 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private RecyclerView recipesListRecyclerView;
     private RecipesListAdapter recipesListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ActivityMainBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        recipesListRecyclerView = findViewById(R.id.recycler_view_recipes);
+        // Inflate the content view (replacing `setContentView`)
+        //setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        //recipesListRecyclerView = findViewById(R.id.recycler_view_recipes);
+        recipesListRecyclerView = binding.recyclerViewRecipes;
         recipesListAdapter = new RecipesListAdapter();
         setupUIForRecyclerViewRecipesList();
 
-        swipeRefreshLayout = findViewById(R.id.swipe_container_main);
-        //Add the refresh listener
+        //swipeRefreshLayout = findViewById(R.id.swipe_container_main);
+        swipeRefreshLayout = binding.swipeContainerMain;
+        //Add the swipe to refresh listener
         swipeRefreshLayout.setOnRefreshListener(this);
 
         /*
-        //retrieve the data
-        JItsBakingTimeApp.sApiClient.getRecipes(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> recipesResponse) {
-                int statusCode = recipesResponse.code();
-                if (recipesResponse.isSuccessful()) {
-                    Timber.d("recipes response successful");
-                    List<Recipe> recipesList = recipesResponse.body();
-                    recipesListAdapter.setRecipesList(recipesList);
-                    Timber.d( "Number of Recipes Received: " + recipesList.size());
-
-                    //enableMoviePostersRecyclerView();
-                    //moviePosterRecyclerView.setAdapter(movieOuterAdapter);
-                    //if (mMovieAdapter == null) {
-                        //mMovieAdapter = new MovieAdapter(movieList, MainActivity.this, context,false);
-
-                        //mRecyclerView.setAdapter(mMovieAdapter);
-                        //mRecyclerView.setHasFixedSize(true);
-
-                    //} else {
-                    //    mMovieAdapter.updateRecyclerData(movieList,false);
-                    //    mMovieAdapter.notifyDataSetChanged();
-                    //}
-                } else {
-
-                    Timber.e("Failed to load list of recipes");
-                    //showErrorMessage("Failed to Load list of recipes, Status Code=" + statusCode);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Timber.d( "HTTP request failed: " + t.getMessage());
-                //Toast.makeText(application.getApplicationContext(), R.string.connectivity_error_text,
-                 //       Toast.LENGTH_LONG).show();
-
-            }
-        });
-
+        //retrieve the data to be displayed
          */
         retrieveAndLoadJson();
         recipesListRecyclerView.setAdapter(recipesListAdapter);
@@ -105,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     recipesListAdapter.clearList();
                     List<Recipe> recipesList = recipesResponse.body();
                     recipesListAdapter.setRecipesList(recipesList);
-                    Timber.d( "Number of Recipes Received: " + recipesList.size());
+                    Timber.d( "Number of Recipes Received: %s", recipesList.size());
 
                     //enableMoviePostersRecyclerView();
                     //moviePosterRecyclerView.setAdapter(movieOuterAdapter);
@@ -129,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Timber.d( "HTTP request failed: " + t.getMessage());
+                Timber.d( "HTTP request failed: %s", t.getMessage());
                 //Toast.makeText(application.getApplicationContext(), R.string.connectivity_error_text,
                 //       Toast.LENGTH_LONG).show();
                 //TODO - implement Alert

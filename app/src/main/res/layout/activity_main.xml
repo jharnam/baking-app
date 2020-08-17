@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Used whenever the user refreshes the contents of a view -->
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipe_container_main"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_view_recipes"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    <!-- Used whenever the user refreshes the contents of a view -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    tools:listitem="@layout/item_recipe" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_recipes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity"
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            tools:listitem="@layout/item_recipe" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>
+
 
 
