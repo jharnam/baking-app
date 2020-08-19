@@ -1,10 +1,13 @@
-package com.example.android.jitsbankingtime;
+package com.example.android.jitsbankingtime.ui.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.example.android.jitsbankingtime.IngredientsListFragment;
+import com.example.android.jitsbankingtime.StepsListFragment;
 
 import timber.log.Timber;
 

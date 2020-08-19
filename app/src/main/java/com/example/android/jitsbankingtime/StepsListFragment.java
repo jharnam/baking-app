@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.jitsbankingtime.databinding.FragmentStepsBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.model.Step;
+import com.example.android.jitsbankingtime.ui.adapters.StepsListAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import timber.log.Timber;

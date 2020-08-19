@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.jitsbankingtime.databinding.FragmentIngredientsBinding;
 import com.example.android.jitsbankingtime.model.Ingredient;
 import com.example.android.jitsbankingtime.model.Recipe;
+import com.example.android.jitsbankingtime.ui.adapters.IngredientsListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

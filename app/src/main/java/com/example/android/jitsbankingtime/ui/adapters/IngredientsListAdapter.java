@@ -1,17 +1,15 @@
-package com.example.android.jitsbankingtime;
+package com.example.android.jitsbankingtime.ui.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.databinding.IngredientRowItemBinding;
-import com.example.android.jitsbankingtime.databinding.ItemMainRecipeBinding;
 import com.example.android.jitsbankingtime.model.Ingredient;
-import com.example.android.jitsbankingtime.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;

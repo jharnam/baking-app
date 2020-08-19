@@ -9,15 +9,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.example.android.jitsbankingtime.api.ApiClient;
 import com.example.android.jitsbankingtime.databinding.ActivityMainBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
+import com.example.android.jitsbankingtime.ui.adapters.RecipesListAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

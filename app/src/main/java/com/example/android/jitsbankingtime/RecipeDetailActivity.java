@@ -2,23 +2,21 @@ package com.example.android.jitsbankingtime;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.android.jitsbankingtime.databinding.ActivityRecipeDetailBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
+import com.example.android.jitsbankingtime.ui.adapters.DetailPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
 import timber.log.Timber;
 
-import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_RECIPE;
 
 public class RecipeDetailActivity extends AppCompatActivity {

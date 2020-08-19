@@ -1,4 +1,4 @@
-package com.example.android.jitsbankingtime;
+package com.example.android.jitsbankingtime.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.databinding.StepRowItemBinding;
 import com.example.android.jitsbankingtime.model.Step;
 
