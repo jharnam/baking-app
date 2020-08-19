@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">J - It\'s Banking Time</string>
+    <string name="app_name">Baking Time</string>
+    <string name="servings_label">Servings</string>
+
+    <string name="tab_label1">Ingredients</string>
+    <string name="tab_label2">Steps</string>
+
+    <string name="bt_play_content_description">Play button</string>
+    <string name="thumbnail_content_description">The thumbnail of the step</string>
 </resources>

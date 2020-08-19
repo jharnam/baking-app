@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -23,7 +25,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_RECIPE;
+
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RecipesListAdapter.RecipeAdapterOnClickHandler
+{
 
     private RecyclerView recipesListRecyclerView;
     private RecipesListAdapter recipesListAdapter;
@@ -40,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         //recipesListRecyclerView = findViewById(R.id.recycler_view_recipes);
         recipesListRecyclerView = binding.recyclerViewRecipes;
-        recipesListAdapter = new RecipesListAdapter();
+        recipesListAdapter = new RecipesListAdapter(this);
         setupUIForRecyclerViewRecipesList();
 
         //swipeRefreshLayout = findViewById(R.id.swipe_container_main);
@@ -122,5 +127,23 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         //When the Json is received, the adapter list is updated
         retrieveAndLoadJson();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onClick(Recipe currentRecipe) {
+        Timber.d("inside the onClick in MainActivity");
+
+        Context context = this;
+        Class destinationClass = RecipeDetailActivity.class;
+        Intent intentToStartRecipeDetailActivity = new Intent(context, destinationClass);
+
+        //Pass the Data to the Detail activity
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_RECIPE, currentRecipe);
+
+        intentToStartRecipeDetailActivity.putExtra(EXTRA_RECIPE, bundle);
+        startActivity(intentToStartRecipeDetailActivity);
+
+
     }
 }

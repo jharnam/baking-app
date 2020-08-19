@@ -1,6 +1,7 @@
 package com.example.android.jitsbankingtime;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,20 @@ import java.util.List;
 import timber.log.Timber;
 
 public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.RecipeViewHolder> {
-    List<Recipe> recipesList = new ArrayList<>();
+
+    /**
+     * The interface that receives onClick messages.
+     */
+    public interface RecipeAdapterOnClickHandler {
+        void onClick (Recipe recipe);
+    }
+
+    private List<Recipe> recipesList = new ArrayList<>();
+    private final RecipeAdapterOnClickHandler clickHandler;
+
+    public RecipesListAdapter(RecipeAdapterOnClickHandler clickHandler) {
+        this.clickHandler = clickHandler;
+    }
 
     @NonNull
     @Override
@@ -25,7 +39,6 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ItemMainRecipeBinding binding = DataBindingUtil.inflate(layoutInflater,
                 R.layout.item_main_recipe, parent, false);
-        //return new RecipeViewHolder(binding.getRoot());
         return new RecipeViewHolder(binding);
     }
 
@@ -43,6 +56,8 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
         if (recipesList !=null) {
             return recipesList.size();
         }
+        //Error case
+        Timber.e("Recipe list does not exist, or is empty");
         return 0;
     }
 
@@ -63,7 +78,7 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
         notifyDataSetChanged();
     }
 
-    public class RecipeViewHolder extends RecyclerView.ViewHolder {
+    public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         /** This field is used for data binding */
         private ItemMainRecipeBinding binding;
 
@@ -80,7 +95,7 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
             super(binding.getRoot());
             this.binding = binding;
 
-            //itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
 
@@ -114,5 +129,17 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
             }
         }
 
+        /**
+         * This gets called by the child views during a click.
+         *
+         * @param v The View that was clicked
+         */
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            Recipe currentRecipe = recipesList.get(adapterPosition);
+            clickHandler.onClick(currentRecipe);
+
+        }
     }
 }

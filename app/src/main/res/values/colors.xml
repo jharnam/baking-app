@@ -3,4 +3,12 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <!-- TabLayout -->
+    <color name="color_tab_indicator">@color/colorPrimaryDark</color>
+    <color name="color_tab_selected_text">@color/colorPrimaryDark</color>
+    <color name="color_tab_text">#9E9E9E</color>
+
+    <!-- Background color -->
+    <color name="color_background">#F6F5FF</color>
 </resources>

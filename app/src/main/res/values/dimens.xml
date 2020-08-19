@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="margin_64dp">64dp</dimen>
+    <dimen name="size_16sp">16sp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+
+    <!-- Size of thumbnail -->
+    <dimen name="width_thumbnail_image">100dp</dimen>
+    <dimen name="height_thumbnail_image">70dp</dimen>
+</resources>

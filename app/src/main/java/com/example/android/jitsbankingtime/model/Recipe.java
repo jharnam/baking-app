@@ -1,9 +1,13 @@
 package com.example.android.jitsbankingtime.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /* POJO */
-public class Recipe {
+public class Recipe implements Parcelable {
 
     private long id;
     private String name;
@@ -78,4 +82,44 @@ public class Recipe {
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.name);
+        dest.writeByte(this.isFavorite ? (byte) 1 : (byte) 0);
+        dest.writeList(this.ingredients);
+        dest.writeList(this.steps);
+        dest.writeInt(this.servings);
+        dest.writeString(this.image);
+    }
+
+    protected Recipe(Parcel in) {
+        this.id = in.readLong();
+        this.name = in.readString();
+        this.isFavorite = in.readByte() != 0;
+        this.ingredients = new ArrayList<Ingredient>();
+        in.readList(this.ingredients, Ingredient.class.getClassLoader());
+        this.steps = new ArrayList<RecipeStep>();
+        in.readList(this.steps, RecipeStep.class.getClassLoader());
+        this.servings = in.readInt();
+        this.image = in.readString();
+    }
+
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel source) {
+            return new Recipe(source);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }
