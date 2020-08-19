@@ -93,7 +93,7 @@ public class IngredientsListFragment extends Fragment {
     }
 
     private void initAdapter() {
-        // Create a new list of the ingredient and indices
+        // Create a new list of the ingredients
         List<Ingredient> ingredients = new ArrayList<>();
 
         // The IngredientsAdapter is responsible for displaying each ingredient in the list

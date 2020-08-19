@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /* POJO */
-public class RecipeStep implements Parcelable {
+public class Step implements Parcelable {
     private int id;
     private String shortDescription;
     private String description;
@@ -25,10 +25,10 @@ public class RecipeStep implements Parcelable {
         dest.writeString(this.thumbnailURL);
     }
 
-    public RecipeStep() {
+    public Step() {
     }
 
-    protected RecipeStep(Parcel in) {
+    protected Step(Parcel in) {
         this.id = in.readInt();
         this.shortDescription = in.readString();
         this.description = in.readString();
@@ -36,15 +36,15 @@ public class RecipeStep implements Parcelable {
         this.thumbnailURL = in.readString();
     }
 
-    public static final Parcelable.Creator<RecipeStep> CREATOR = new Parcelable.Creator<RecipeStep>() {
+    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
         @Override
-        public RecipeStep createFromParcel(Parcel source) {
-            return new RecipeStep(source);
+        public Step createFromParcel(Parcel source) {
+            return new Step(source);
         }
 
         @Override
-        public RecipeStep[] newArray(int size) {
-            return new RecipeStep[size];
+        public Step[] newArray(int size) {
+            return new Step[size];
         }
     };
 

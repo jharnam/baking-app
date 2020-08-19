@@ -10,19 +10,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.jitsbankingtime.databinding.FragmentStepsBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
+import com.example.android.jitsbankingtime.model.Step;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import timber.log.Timber;
 
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_RECIPE;
 
-public class StepsListFragment extends Fragment {
+public class StepsListFragment extends Fragment implements StepsListAdapter.StepAdapterOnClickHandler{
     FragmentStepsBinding binding;
     Recipe recipe;
+    private StepsListAdapter stepsListAdapter;
+    private RecyclerView stepsListRecyclerView;
+
 
     //required empty constructor
     public StepsListFragment() {
@@ -74,11 +82,40 @@ public class StepsListFragment extends Fragment {
         //inflate the UI
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_steps, container, false);
 
-        if (recipe == null){
-            recipe =((RecipeDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
-        }
+        //TODO should we call this again?
+        populateRecipeDetails();
+
+        stepsListRecyclerView = binding.recyclerViewSteps;
+
+        // Initialize a IngredientAdapter
+        initAdapter();
+
         //return super.onCreateView(inflater, container, savedInstanceState);
         return binding.getRoot();
     }
-}
 
+    private void initAdapter() {
+
+        // The IngredientsAdapter is responsible for displaying each ingredient in the list
+        stepsListAdapter = new StepsListAdapter(this);
+
+        setupUIForRecyclerViewStepsList();
+
+        stepsListRecyclerView.setAdapter(stepsListAdapter);
+        // Add a list of ingredients to the IngredientsAdapter
+        stepsListAdapter.setStepsList(recipe.getSteps());
+
+
+    }
+
+    private void setupUIForRecyclerViewStepsList() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        stepsListRecyclerView.setLayoutManager(linearLayoutManager);
+        stepsListRecyclerView.setHasFixedSize(true);
+    }
+
+    @Override
+    public void onClick(Step step) {
+        //TODO
+    }
+}

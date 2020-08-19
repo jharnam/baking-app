@@ -1,66 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Step ID -->
-    <TextView
-        android:id="@+id/tv_step_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_16dp"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="10" />
+    <data>
 
-    <!-- Short Description of the step -->
-    <TextView
-        android:id="@+id/tv_step_short_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/margin_8dp"
-        android:layout_marginStart="@dimen/margin_8dp"
-        android:textSize="@dimen/size_16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iv_thumbnail"
-        app:layout_constraintStart_toEndOf="@+id/tv_step_id"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Add chocolate chunks" />
+    </data>
 
-    <!-- Play button -->
-    <ImageView
-        android:id="@+id/iv_play_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:contentDescription="@string/bt_play_content_description"
-        android:tint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_thumbnail"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_media_play" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Step ID -->
+        <TextView
+            android:id="@+id/tv_step_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10" />
+
+        <!-- Short Description of the step -->
+        <TextView
+            android:id="@+id/tv_step_short_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:textSize="@dimen/size_16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_thumbnail"
+            app:layout_constraintStart_toEndOf="@+id/tv_step_id"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Add chocolate chunks" />
+
+        <!-- Play button -->
+        <ImageView
+            android:id="@+id/iv_play_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:contentDescription="@string/bt_play_content_description"
+            android:tint="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_media_play" />
 
 
-    <!-- Hide the thumbnail image of the step -->
-    <ImageView
-        android:id="@+id/iv_thumbnail"
-        android:layout_width="@dimen/width_thumbnail_image"
-        android:layout_height="@dimen/height_thumbnail_image"
-        android:layout_marginBottom="@dimen/margin_8dp"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:contentDescription="@string/thumbnail_content_description"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iv_play_arrow"
-        app:layout_constraintStart_toEndOf="@+id/tv_step_short_description"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- Hide the thumbnail image of the step -->
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="@dimen/width_thumbnail_image"
+            android:layout_height="@dimen/height_thumbnail_image"
+            android:layout_marginBottom="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:contentDescription="@string/thumbnail_content_description"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_play_arrow"
+            app:layout_constraintStart_toEndOf="@+id/tv_step_short_description"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

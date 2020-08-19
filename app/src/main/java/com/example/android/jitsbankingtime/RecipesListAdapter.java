@@ -83,14 +83,6 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
         private ItemMainRecipeBinding binding;
 
 
-        //public RecipeViewHolder(@NonNull View itemView) {
-            //super(itemView);
-        //recipeName = itemView.findViewById(R.id.recipe_title);
-        //numberOfServings = itemView.findViewById(R.id.recipe_servings);
-        //itemView.setOnClickListener(this);
-        //}
-
-
         public RecipeViewHolder(ItemMainRecipeBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
