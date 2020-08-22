@@ -8,5 +8,7 @@
     <!-- Size of thumbnail -->
     <dimen name="width_thumbnail_image">100dp</dimen>
     <dimen name="height_thumbnail_image">70dp</dimen>
-    <dimen name="margin_48dp">48</dimen>
+    <dimen name="margin_48dp">48dp</dimen>
+
+    <dimen name="size_button">48dp</dimen>
 </resources>

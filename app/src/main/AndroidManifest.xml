@@ -27,7 +27,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".StepDetailActivity"
-            android:theme="@style/DetailTheme"
             android:parentActivityName=".RecipeDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

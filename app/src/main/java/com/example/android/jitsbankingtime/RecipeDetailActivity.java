@@ -72,10 +72,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void showUpButton() {
         setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        //getSupportActionBar().setDisplayShowTitleEnabled(true);
         //getSupportActionBar().setTitle("now this");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);;
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
