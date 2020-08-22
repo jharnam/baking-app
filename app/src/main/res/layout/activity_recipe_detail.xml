@@ -29,14 +29,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <FrameLayout
+                        android:id="@+id/frame_detail"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="H,3:2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
                     <ImageView
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:id="@+id/recipe_image_view"
                         android:scaleType="centerCrop"
                         android:contentDescription="Image of the recipe" />
+
+                        <!-- ImageView for scrim gradient -->
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/scrim_gradient"
+                            android:contentDescription="@string/scrim_content_description"/>
+
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/text_view_servings_label"
@@ -71,7 +90,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
                     android:theme="@style/ToolbarTheme"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin"
+                    tools:textAlignment="viewStart" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <com.google.android.material.tabs.TabLayout

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.android.jitsbankingtime.IngredientsListFragment;
+import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.StepsListFragment;
 
 import timber.log.Timber;
@@ -14,6 +15,7 @@ import timber.log.Timber;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.INGREDIENTS;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.PAGE_COUNT;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.STEPS;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.TAB_NAMES;
 
 public class DetailPagerAdapter extends FragmentPagerAdapter {
     int numTabs;
@@ -45,5 +47,11 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
         Timber.d("page count is: %d", PAGE_COUNT);
         //return PAGE_COUNT;
         return numTabs;
+    }
+
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return TAB_NAMES[position];
     }
 }

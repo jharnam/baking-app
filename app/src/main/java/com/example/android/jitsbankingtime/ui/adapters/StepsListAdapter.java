@@ -19,10 +19,10 @@ import timber.log.Timber;
 
 public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.StepsViewHolder> {
     /**
-     * The interface that receives onClick messages.
+     * The interface that receives onStepClick messages.
      */
     public interface StepAdapterOnClickHandler {
-        void onClick (Step step);
+        void onStepClick (Step step);
     }
 
     private List<Step> stepsList = new ArrayList<>();
@@ -116,7 +116,7 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.Step
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             Step currentStep = stepsList.get(adapterPosition);
-            clickHandler.onClick(currentStep);
+            clickHandler.onStepClick(currentStep);
 
         }
     }

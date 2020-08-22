@@ -1,6 +1,8 @@
 package com.example.android.jitsbankingtime;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -29,8 +31,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.tab_label1));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.tab_label2));
+        binding.tabLayout.addTab(binding.tabLayout.newTab());
+        binding.tabLayout.addTab(binding.tabLayout.newTab());
 
         // Set gravity for the TabLayout
         binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -53,8 +55,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         populateRecipeFromIntent();
 
         // Set the title for a selected recipe
-        //TODO setTitle(recipe.getName());
-        setTitle("Jharna");
+        setTitle(recipe.getName());
+        //setTitle("Jharna");
 
         // Display the number of servings
         binding.textViewServings.setText(String.valueOf(recipe.getServings()));
@@ -70,6 +72,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void showUpButton() {
         setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        //getSupportActionBar().setTitle("now this");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -132,9 +136,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
      * Reference: @see "https://stackoverflow.com/questions/43874025/toolbar-title-text-color"
      */
     private void setCollapsingToolbarTextColor() {
+        binding.collapsingToolbarLayout.setTitleEnabled(true);
+        //binding.collapsingToolbarLayout.setTitle("Jharna1");
         binding.collapsingToolbarLayout.setExpandedTitleColor(
-                //TODO
-                getResources().getColor(R.color.color_tab_text));
+                getResources().getColor(R.color.white));
         binding.collapsingToolbarLayout.setCollapsedTitleTextColor(
                 getResources().getColor(R.color.colorPrimaryDark));
     }

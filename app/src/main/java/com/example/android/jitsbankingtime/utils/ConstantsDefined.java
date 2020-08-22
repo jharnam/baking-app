@@ -5,8 +5,9 @@ public final class ConstantsDefined {
         public static final String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/";
         public static final String URL_PARAMS = "topher/2017/May/59121517_baking/baking.json";
 
-        /** Extra-Tag for the recipe to be sent/received in the intent */
+        /** Extra-Tag for the recipe, step to be sent/received in the intent */
         public static final String EXTRA_RECIPE = "recipe";
+        public static final String EXTRA_STEP = "step";
 
         /** String array used to display the tab names */
         public static final String[] TAB_NAMES = new String[] {"Ingredients", "Steps"};

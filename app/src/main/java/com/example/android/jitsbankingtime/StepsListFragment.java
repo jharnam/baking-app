@@ -1,5 +1,6 @@
 package com.example.android.jitsbankingtime;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import java.util.Objects;
 import timber.log.Timber;
 
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_RECIPE;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_STEP;
 
 public class StepsListFragment extends Fragment implements StepsListAdapter.StepAdapterOnClickHandler{
     FragmentStepsBinding binding;
@@ -114,7 +116,20 @@ public class StepsListFragment extends Fragment implements StepsListAdapter.Step
     }
 
     @Override
-    public void onClick(Step step) {
-        //TODO
+    public void onStepClick(Step currentStep) {
+        //start the StepDetailActivity
+        Context context = this.getContext();
+        Class destinationClass = StepDetailActivity.class;
+        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+
+        // Pass the Data to the DetailActivity
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_STEP, currentStep);
+        bundle.putParcelable(EXTRA_RECIPE, recipe);
+
+        intentToStartDetailActivity.putExtra(EXTRA_RECIPE, bundle);
+        intentToStartDetailActivity.putExtra(EXTRA_STEP, bundle);
+        startActivity(intentToStartDetailActivity);
+
     }
 }

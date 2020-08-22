@@ -11,4 +11,6 @@
 
     <!-- Background color -->
     <color name="color_background">#F6F5FF</color>
+
+    <color name="white">#FFFFFF</color>
 </resources>
