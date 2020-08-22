@@ -41,4 +41,12 @@
         <item name="android:textColor">@color/color_tab_text</item>
     </style>
 
+    <!-- Style for ImageButtons -->
+    <style name="ImageButtonStyle">
+        <item name="android:layout_width">@dimen/size_button</item>
+        <item name="android:layout_height">@dimen/size_button</item>
+        <item name="android:layout_margin">@dimen/margin_16dp</item>
+    </style>
+
+    <dimen name="size_button">48dp</dimen>
 </resources>

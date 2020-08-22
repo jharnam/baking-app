@@ -8,4 +8,6 @@
     <string name="bt_play_content_description">Play button</string>
     <string name="thumbnail_content_description">The thumbnail of the step</string>
     <string name="scrim_content_description">The scrim gradient to separate the text from the background</string>
+    <string name="description_of_the_recipe_step">Description of the recipe step</string>
+    <string name="default__step_image_content_description">The default image shown when there is none provided for the recipe step</string>
 </resources>
