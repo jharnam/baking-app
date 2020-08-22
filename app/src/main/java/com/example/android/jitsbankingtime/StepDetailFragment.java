@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.android.jitsbankingtime.databinding.FragmentStepDetailBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
@@ -20,6 +22,7 @@ import java.util.Objects;
 public class StepDetailFragment extends Fragment {
     FragmentStepDetailBinding binding;
     Step step;
+    int currentStepId;
     Recipe recipe;
 
     //required empty constructor
@@ -49,11 +52,53 @@ public class StepDetailFragment extends Fragment {
         //handler for previous button click
         onPreviousButtonClick();
 
+        //handler for next button click
+        onNextButtonClick();
+
         return binding.getRoot();
     }
 
+    private void onNextButtonClick() {
+
+        binding.buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StepDetailFragment stepDetailFragment = new StepDetailFragment();
+                if (currentStepId < recipe.getSteps().size() - 1) {
+                    currentStepId++;
+                    stepDetailFragment.currentStepId = currentStepId;
+                    stepDetailFragment.step = recipe.getSteps().get(currentStepId);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.step_container, stepDetailFragment)
+                            .commit();
+                } else {
+                    Toast.makeText(getContext(), "Can't go further. Nothing after this step!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     private void onPreviousButtonClick() {
-        //binding.buttonPrevious.setOnClickListener();
+        binding.buttonPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StepDetailFragment stepDetailFragment = new StepDetailFragment();
+                if (currentStepId > 0) {
+                    currentStepId--;
+                    stepDetailFragment.currentStepId = currentStepId;
+                    stepDetailFragment.step = recipe.getSteps().get(currentStepId);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.step_container, stepDetailFragment)
+                            .commit();
+                } else {
+                    Toast.makeText(getContext(), "Can't go further. Nothing before this step!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void populateRecipeAndStepDetails() {
@@ -61,7 +106,8 @@ public class StepDetailFragment extends Fragment {
             recipe =((StepDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
         }
         if (step == null) {
-            step =((StepDetailActivity) Objects.requireNonNull(getActivity())).getStep();
+            step = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getStep();
+            currentStepId = step.getId();
         }
 
     }

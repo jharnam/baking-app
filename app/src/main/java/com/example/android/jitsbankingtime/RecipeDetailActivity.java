@@ -1,10 +1,10 @@
 package com.example.android.jitsbankingtime;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +40,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         // Find the view pager that will allow the user to swipe between fragments
         //ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
-
 
 
         // Create an adapter that knows which fragment should be shown on each page
@@ -145,4 +144,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 getResources().getColor(R.color.colorPrimaryDark));
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.home) {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return super.onSupportNavigateUp();
+    }
 }

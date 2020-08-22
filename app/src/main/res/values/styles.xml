@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">#D9A3FA</item>
+        <item name="colorPrimaryDark">#A57968</item>
         <item name="colorAccent">#69F0AE</item>
 
         <!-- The color of action bar title -->

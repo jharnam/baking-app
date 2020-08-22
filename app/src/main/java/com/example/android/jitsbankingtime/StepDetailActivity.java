@@ -2,7 +2,9 @@ package com.example.android.jitsbankingtime;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -90,8 +92,23 @@ public class StepDetailActivity extends AppCompatActivity {
         }
 
     }
+
     public Recipe getRecipe() {
         return recipe;
     }
-    public Step getStep() { return step; }
+
+    public Step getStep() {
+        return step;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.home) {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
 }
