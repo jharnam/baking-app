@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -28,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_16dp"
-                android:text="Step 5 of 5"
+                tools:text="Step 5 of 5"
                 android:textSize="@dimen/size_16sp"
                 app:layout_constraintEnd_toStartOf="@+id/button_next"
                 app:layout_constraintStart_toEndOf="@+id/button_previous"
@@ -47,9 +48,18 @@
                 android:id="@+id/frame_layout_step_media"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="#F6F5FF"
+                app:layout_constraintBottom_toTopOf="@+id/card_view_step_description_container"
+                app:layout_constraintDimensionRatio="H,3:2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/button_next">
+
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:show_shuffle_button="false" />
 
                 <ImageView
                     android:id="@+id/image_view_step_default"
@@ -58,7 +68,7 @@
                     android:layout_marginTop="@dimen/margin_48dp"
                     android:layout_marginBottom="@dimen/margin_48dp"
                     android:contentDescription="@string/default__step_image_content_description"
-                    android:scaleType="centerInside" />
+                    android:scaleType="fitCenter" />
 
             </FrameLayout>
 
