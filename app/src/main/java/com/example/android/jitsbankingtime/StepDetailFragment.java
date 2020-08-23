@@ -36,8 +36,11 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
+
+import timber.log.Timber;
 
 import static android.view.View.GONE;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.APP_NAME;
@@ -77,6 +80,8 @@ public class StepDetailFragment extends Fragment {
         populateRecipeAndStepDetails();
 
 
+        //display the step id
+        binding.textViewStepId.setText("Step " + String.valueOf(currentStepId) + "  of " + String.valueOf(recipe.getSteps().size() - 1));
         //get a reference to the textview in the fragment layout
         TextView stepDescriptionTextView = binding.textViewStepDescription;
         stepDescriptionTextView.setText(step.getDescription());
@@ -137,43 +142,60 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void populateRecipeAndStepDetails() {
-        if (recipe == null){
-            recipe =((StepDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
+        if (recipe == null) {
+            recipe = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
         }
         if (step == null) {
             step = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getStep();
             currentStepId = step.getId();
-            videoUrl = step.getVideoURL();
-            thumbnailUrl = step.getThumbnailURL();
-            if (videoUrl.isEmpty()) {
-                //check if thumbailUrl has an "mp4"
-                if (!(thumbnailUrl.isEmpty())) {
-                    if (thumbnailUrl.contains("mp4")) {
-                        //this can be used instead of videoUrl
-                        containsVideo = true;
-                        videoUrl = thumbnailUrl;
-                    } else {
-                        //its a normal thumbail :)
-                        containsVideo = false;
-                        binding.playerView.setVisibility(GONE);
 
-                        //display it using picasso
-                        //TODO
-                    }
+        }
+        videoUrl = step.getVideoURL();
+        thumbnailUrl = step.getThumbnailURL();
+
+        //whether steps was null or not
+        //do...?
+        findIfWeHaveAVideo();
+
+    }
+
+    private void findIfWeHaveAVideo() {
+        Timber.d("checking findIfWeHaveAVideo");
+        if (videoUrl.trim().equals("") || videoUrl.isEmpty()) {
+            //if (videoUrl != null && videoUrl.isEmpty()) {
+            Timber.d("videoUrl isEmpty");
+            //check if thumbailUrl has an "mp4"
+            if (!(thumbnailUrl.isEmpty())) {
+                Timber.d("thumbnailUrl is NOT empty");
+                if (thumbnailUrl.contains("mp4")) {
+                    //this can be used instead of videoUrl
+                    Timber.d("thumbnailUrl contains mp4");
+                    containsVideo = true;
+                    videoUrl = thumbnailUrl;
                 } else {
-                    //thumbnail is also empty
+                    //its a normal thumbail :)
+                    Timber.d("Its a normal thumbnail");
                     containsVideo = false;
                     binding.playerView.setVisibility(GONE);
 
-                    //display default image using Picasso
-                    //TODO
-                    binding.imageViewStepDefault.setImageResource(R.drawable.recipe_placeholder_icon);
+                    //display it using picasso
+                    Picasso.get()
+                            .load(thumbnailUrl)
+                            .error(R.drawable.recipe_placeholder_icon)
+                            .into(binding.imageViewStepDefault);
                 }
             } else {
-                containsVideo = true;
-            }
-        }
+                //thumbnail is also empty
+                containsVideo = false;
+                binding.playerView.setVisibility(GONE);
 
+                //display default image using Picasso
+                //TODO
+                binding.imageViewStepDefault.setImageResource(R.drawable.recipe_placeholder_icon);
+            }
+        } else {
+            containsVideo = true;
+        }
     }
 
     @Override
