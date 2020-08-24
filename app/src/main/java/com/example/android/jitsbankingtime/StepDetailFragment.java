@@ -3,6 +3,8 @@ package com.example.android.jitsbankingtime;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +20,11 @@ import androidx.fragment.app.FragmentManager;
 import com.example.android.jitsbankingtime.databinding.FragmentStepDetailBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.model.Step;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -44,6 +48,12 @@ import timber.log.Timber;
 
 import static android.view.View.GONE;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.APP_NAME;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_CURRENT_STEP_ID;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_CURRENT_WINDOW;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_PLAYBACK_POSITION;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_PLAY_WHEN_READY;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_RECIPE;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_STEP;
 
 public class StepDetailFragment extends Fragment {
     private FragmentStepDetailBinding binding;
@@ -54,12 +64,18 @@ public class StepDetailFragment extends Fragment {
     //TODO private ExoPlayer mediaPlayer;
     private SimpleExoPlayer mediaPlayer;
     private PlaybackStateListener playbackStateListener;
+
+    // Tag for a MediaSessionCompat
+    private static final String TAG = StepDetailFragment.class.getSimpleName();
+    private static MediaSessionCompat mMediaSession;
+
     private boolean playWhenReady = true;
     private int currentWindow = 0;
     private long playbackPosition = 0;
     private boolean containsVideo = false;
     private String videoUrl;
     private String thumbnailUrl;
+    private PlaybackStateCompat.Builder mStateBuilder;
 
     //required empty constructor
     public StepDetailFragment() {
@@ -77,12 +93,15 @@ public class StepDetailFragment extends Fragment {
         //inflate the fragment layout
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_step_detail, container, false);
 
-        populateRecipeAndStepDetails();
+        populateRecipeAndStepDetails(savedInstanceState);
+
+        //init Media Session for enabling external clients  to be able to interact with the ExoPlayer
+        initializeMediaSession();
 
 
         //display the step id
         binding.textViewStepId.setText("Step " + String.valueOf(currentStepId) + "  of " + String.valueOf(recipe.getSteps().size() - 1));
-        //get a reference to the textview in the fragment layout
+        //get a reference to the textviewDescription in the fragment layout
         TextView stepDescriptionTextView = binding.textViewStepDescription;
         stepDescriptionTextView.setText(step.getDescription());
 
@@ -96,6 +115,37 @@ public class StepDetailFragment extends Fragment {
         playbackStateListener = new PlaybackStateListener();
 
         return binding.getRoot();
+    }
+
+    private void initializeMediaSession() {
+        // Create a MediaSessionCompat.
+        mMediaSession = new MediaSessionCompat(this.getContext(), TAG);
+
+        // Enable callbacks from MediaButtons and TransportControls.
+        mMediaSession.setFlags(
+                MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
+                        MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+
+        // Do not let MediaButtons restart the player when the app is not visible.
+        mMediaSession.setMediaButtonReceiver(null);
+
+        // Set an initial PlaybackState with ACTION_PLAY, so media buttons can start the player.
+        mStateBuilder = new PlaybackStateCompat.Builder()
+                .setActions(
+                        PlaybackStateCompat.ACTION_PLAY |
+                                PlaybackStateCompat.ACTION_PAUSE |
+                                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
+                                PlaybackStateCompat.ACTION_PLAY_PAUSE);
+
+        mMediaSession.setPlaybackState(mStateBuilder.build());
+
+
+        // MySessionCallback has methods that handle callbacks from a media controller.
+        mMediaSession.setCallback(new MySessionCallback());
+
+        // Start the Media Session since the activity is active.
+        mMediaSession.setActive(true);
+
     }
 
     private void onNextButtonClick() {
@@ -141,15 +191,35 @@ public class StepDetailFragment extends Fragment {
         });
     }
 
-    private void populateRecipeAndStepDetails() {
-        if (recipe == null) {
-            recipe = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
-        }
-        if (step == null) {
-            step = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getStep();
-            currentStepId = step.getId();
+    private void populateRecipeAndStepDetails(Bundle savedInstanceState) {
+        //if the saved state exists, ....
+        if (savedInstanceState != null) {
+            //...retrieve the relevant data from there
+            recipe = savedInstanceState.getParcelable(SAVE_RECIPE);
+            step = savedInstanceState.getParcelable(SAVE_STEP);
+            currentStepId = savedInstanceState.getInt(SAVE_CURRENT_STEP_ID);
+
+            playbackPosition = savedInstanceState.getLong(SAVE_PLAYBACK_POSITION);
+            currentWindow = savedInstanceState.getInt(SAVE_CURRENT_WINDOW);
+            playWhenReady = savedInstanceState.getBoolean(SAVE_PLAY_WHEN_READY);
+
+        } else {
+            //...get it from the activity
+            if (recipe == null) {
+                recipe = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
+            }
+            if (step == null) {
+                step = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getStep();
+                currentStepId = step.getId();
+
+            }
+            // Clear the start position
+            currentWindow = C.INDEX_UNSET;
+            playbackPosition = C.TIME_UNSET;
+            playWhenReady = true;
 
         }
+
         videoUrl = step.getVideoURL();
         thumbnailUrl = step.getThumbnailURL();
 
@@ -247,10 +317,11 @@ public class StepDetailFragment extends Fragment {
                 //        new DefaultTrackSelector());
                 //mediaPlayer = SimpleExoPlayer.Builder(this).build;
 
+
                 binding.playerView.setPlayer(mediaPlayer);
 
                 //TODO
-                //mediaPlayer.setPlayWhenReady();
+                mediaPlayer.setPlayWhenReady(playWhenReady);
             }
 
             // Set the ExoPlayer.EventListener to this fragment.
@@ -268,7 +339,7 @@ public class StepDetailFragment extends Fragment {
                     .createMediaSource(mediaUri);
 
             mediaPlayer.prepare(mediaSource);
-            mediaPlayer.setPlayWhenReady(true);
+            //JKM mediaPlayer.setPlayWhenReady(true);
         }
     }
 
@@ -277,11 +348,10 @@ public class StepDetailFragment extends Fragment {
      * Release ExoPlayer.
      */
     private void releasePlayer() {
-        //TODO mNotificationManager.cancelAll();
         if (mediaPlayer != null) {
-            playbackPosition = mediaPlayer.getCurrentPosition();
-            currentWindow = mediaPlayer.getCurrentWindowIndex();
-            playWhenReady = mediaPlayer.getPlayWhenReady();
+            retrieveCurrentPlayerPosition();
+            mediaPlayer.removeListener(playbackStateListener);
+
             //TODO mediaPlayer.stop();
 
             mediaPlayer.release();
@@ -300,6 +370,38 @@ public class StepDetailFragment extends Fragment {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
          */
+    }
+
+    /**
+     * Retrieves and saves in the fragment the current state of the player
+     */
+    private void retrieveCurrentPlayerPosition() {
+        if (mediaPlayer != null) {
+            playbackPosition = mediaPlayer.getCurrentPosition();
+            currentWindow = mediaPlayer.getCurrentWindowIndex();
+            playWhenReady = mediaPlayer.getPlayWhenReady();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+
+        //Store in the bundle what we will need
+        outState.putParcelable(SAVE_STEP, step);
+        outState.putInt(SAVE_CURRENT_STEP_ID, currentStepId);
+
+        outState.putParcelable(SAVE_RECIPE, recipe);
+
+        //Store in the fragment, the exoplayer positions
+        retrieveCurrentPlayerPosition();
+
+        //update the bundle with the latest exoplayer positions
+        outState.putLong(SAVE_PLAYBACK_POSITION, playbackPosition);
+        outState.putInt(SAVE_CURRENT_WINDOW, currentWindow);
+        outState.putBoolean(SAVE_PLAY_WHEN_READY, playWhenReady);
+
     }
 
     private class PlaybackStateListener implements Player.EventListener {
@@ -329,6 +431,15 @@ public class StepDetailFragment extends Fragment {
          */
         @Override
         public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+            if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
+                mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
+                        mediaPlayer.getCurrentPosition(), 1f);
+            } else if ((playbackState == ExoPlayer.STATE_READY)) {
+                mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
+                        mediaPlayer.getCurrentPosition(), 1f);
+            }
+            mMediaSession.setPlaybackState(mStateBuilder.build());
+            //showNotification(mStateBuilder.build());
 
         }
 
@@ -362,5 +473,25 @@ public class StepDetailFragment extends Fragment {
 
         }
 
+    }
+
+    /**
+     * Media Session Callbacks, where all external clients control the player.
+     */
+    private class MySessionCallback extends MediaSessionCompat.Callback {
+        @Override
+        public void onPlay() {
+            mediaPlayer.setPlayWhenReady(true);
+        }
+
+        @Override
+        public void onPause() {
+            mediaPlayer.setPlayWhenReady(false);
+        }
+
+        @Override
+        public void onRewind() {
+            //mediaPlayer.seekTo((mediaPlayer.getCurrentPosition() - REWIND_FAST_FORWARD_INCREMENT), 0);
+        }
     }
 }

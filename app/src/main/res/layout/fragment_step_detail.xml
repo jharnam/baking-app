@@ -59,7 +59,10 @@
                     android:id="@+id/player_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:show_shuffle_button="false" />
+                    app:fastforward_increment="30000"
+                    app:rewind_increment="30000"
+                    app:show_shuffle_button="false"
+                    app:show_timeout="10000" />
 
                 <ImageView
                     android:id="@+id/image_view_step_default"
