@@ -1,4 +1,4 @@
-package com.example.android.jitsbankingtime;
+package com.example.android.jitsbankingtime.ui.screens;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.databinding.FragmentStepsBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.model.Step;

@@ -13,7 +13,7 @@ import timber.log.Timber;
 public class JItsBakingTimeApp extends Application {
 
 
-    //TODO 1 - temporary - see if this needs to stay here - after we addd a datarepository
+    //TODO 1 - temporary - see if this needs to stay here - after we add a datarepository
     public static ApiClient sApiClient;
 
     @Override

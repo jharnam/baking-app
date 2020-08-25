@@ -1,4 +1,8 @@
-package com.example.android.jitsbankingtime;
+package com.example.android.jitsbankingtime.ui.screens;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -6,10 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-
+import com.example.android.jitsbankingtime.JItsBakingTimeApp;
+import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.databinding.ActivityMainBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.ui.adapters.RecipesListAdapter;

@@ -1,4 +1,4 @@
-package com.example.android.jitsbankingtime;
+package com.example.android.jitsbankingtime.ui.screens;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.databinding.FragmentStepDetailBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.model.Step;
@@ -39,6 +40,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
@@ -303,26 +305,27 @@ public class StepDetailFragment extends Fragment {
 
 
     private void initializePlayer() {
+        Timber.d("initializePlayer");
         if (containsVideo) {
+            Timber.d("containsVideo");
             if (mediaPlayer == null) {
                 // Create an instance of the ExoPlayer.
                 DefaultRenderersFactory defaultRenderersFactory = new DefaultRenderersFactory(this.getContext());
                 TrackSelector trackSelector = new DefaultTrackSelector();
                 LoadControl loadControl = new DefaultLoadControl();
-                //TODO mediaPlayer = SimpleExoPlayer.Builder(this.getContext()).build();
                 mediaPlayer = ExoPlayerFactory.newSimpleInstance(
                         (RenderersFactory) defaultRenderersFactory, trackSelector, loadControl);
 
-                //mediaPlayer = ExoPlayerFactory.newSimpleInstance(this.getContext(),
-                //        new DefaultTrackSelector());
-                //mediaPlayer = SimpleExoPlayer.Builder(this).build;
-
+                mediaPlayer.addAnalyticsListener(new EventLogger(null));
 
                 binding.playerView.setPlayer(mediaPlayer);
 
                 //TODO
-                mediaPlayer.setPlayWhenReady(playWhenReady);
             }
+
+            //JKM
+            mediaPlayer.setPlayWhenReady(playWhenReady);
+
 
             // Set the ExoPlayer.EventListener to this fragment.
             mediaPlayer.addListener(playbackStateListener);
@@ -331,14 +334,18 @@ public class StepDetailFragment extends Fragment {
             Uri mediaUri = Uri.parse(videoUrl);
             String userAgent = Util.getUserAgent(this.getContext(), APP_NAME);
 
-            //MediaSource mediaSource = new ExtractorMediaSource.Factory(
-            //        new DefaultDataSourceFactory(this.getContext(), userAgent))
-            //        .createMediaSource(mediaUri);
             MediaSource mediaSource = new ExtractorMediaSource.Factory(
                     new DefaultHttpDataSourceFactory(userAgent))
                     .createMediaSource(mediaUri);
 
-            mediaPlayer.prepare(mediaSource);
+            //if we had previously save the player position, we should maintain that
+            boolean seekToStoredPosition = (currentWindow != C.INDEX_UNSET);
+            if (seekToStoredPosition) {
+                mediaPlayer.seekTo(currentWindow, playbackPosition);
+            }
+
+
+            mediaPlayer.prepare(mediaSource, !seekToStoredPosition, false);
             //JKM mediaPlayer.setPlayWhenReady(true);
         }
     }
@@ -431,6 +438,7 @@ public class StepDetailFragment extends Fragment {
          */
         @Override
         public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+            Timber.d("inside onPlayerStateChanged");
             if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
                 mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                         mediaPlayer.getCurrentPosition(), 1f);

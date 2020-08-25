@@ -1,4 +1,4 @@
-package com.example.android.jitsbankingtime;
+package com.example.android.jitsbankingtime.ui.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.databinding.ActivityStepDetailBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.model.Step;

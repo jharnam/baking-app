@@ -4,11 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.android.jitsbankingtime.IngredientsListFragment;
-import com.example.android.jitsbankingtime.R;
-import com.example.android.jitsbankingtime.StepsListFragment;
+import com.example.android.jitsbankingtime.ui.screens.IngredientsListFragment;
+import com.example.android.jitsbankingtime.ui.screens.StepsListFragment;
 
 import timber.log.Timber;
 
