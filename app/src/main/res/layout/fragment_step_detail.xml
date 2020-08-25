@@ -31,6 +31,7 @@
                 android:layout_margin="@dimen/margin_16dp"
                 tools:text="Step 5 of 5"
                 android:textSize="@dimen/size_16sp"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toStartOf="@+id/button_next"
                 app:layout_constraintStart_toEndOf="@+id/button_previous"
                 app:layout_constraintTop_toTopOf="parent" />

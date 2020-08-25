@@ -25,7 +25,6 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -155,6 +154,7 @@ public class StepDetailFragment extends Fragment {
         binding.buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Timber.d("JKM: next button was clicked, currentStepId is: %d", currentStepId);
                 StepDetailFragment stepDetailFragment = new StepDetailFragment();
                 if (currentStepId < recipe.getSteps().size() - 1) {
                     currentStepId++;
@@ -232,7 +232,7 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void findIfWeHaveAVideo() {
-        Timber.d("checking findIfWeHaveAVideo");
+        Timber.d("checking findIfWeHaveAVideo, stepid: %d", currentStepId);
         if (videoUrl.trim().equals("") || videoUrl.isEmpty()) {
             //if (videoUrl != null && videoUrl.isEmpty()) {
             Timber.d("videoUrl isEmpty");
@@ -305,10 +305,11 @@ public class StepDetailFragment extends Fragment {
 
 
     private void initializePlayer() {
-        Timber.d("initializePlayer");
+        Timber.d("initializePlayer, step id: %d", currentStepId);
         if (containsVideo) {
-            Timber.d("containsVideo");
+            Timber.d("containsVideo: url is: %s", videoUrl);
             if (mediaPlayer == null) {
+                Timber.d("mediaPlayer is null");
                 // Create an instance of the ExoPlayer.
                 DefaultRenderersFactory defaultRenderersFactory = new DefaultRenderersFactory(this.getContext());
                 TrackSelector trackSelector = new DefaultTrackSelector();
@@ -341,6 +342,7 @@ public class StepDetailFragment extends Fragment {
             //if we had previously save the player position, we should maintain that
             boolean seekToStoredPosition = (currentWindow != C.INDEX_UNSET);
             if (seekToStoredPosition) {
+                Timber.d("there was a previously stored player position");
                 mediaPlayer.seekTo(currentWindow, playbackPosition);
             }
 
@@ -438,11 +440,11 @@ public class StepDetailFragment extends Fragment {
          */
         @Override
         public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-            Timber.d("inside onPlayerStateChanged");
-            if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
+            Timber.d("JKM inside onPlayerStateChanged, playWhenReady is %b, playbackState is: %d", playWhenReady, playbackState);
+            if ((playbackState == Player.STATE_READY) && playWhenReady) {
                 mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                         mediaPlayer.getCurrentPosition(), 1f);
-            } else if ((playbackState == ExoPlayer.STATE_READY)) {
+            } else if ((playbackState == Player.STATE_READY)) {
                 mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                         mediaPlayer.getCurrentPosition(), 1f);
             }

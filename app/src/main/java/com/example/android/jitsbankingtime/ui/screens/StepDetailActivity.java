@@ -40,13 +40,16 @@ public class StepDetailActivity extends AppCompatActivity {
         //Show the back arrow button in the actionbar
         showUpButton();
 
-        //Create the StepDetailFragment
-        StepDetailFragment stepDetailFragment = new StepDetailFragment();
-        //Add the fragment to its container using a FragmentManager and a Transaction
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.step_container, stepDetailFragment)
-                .commit();
+        if (savedInstanceState == null) {
+            //Create the StepDetailFragment
+            StepDetailFragment stepDetailFragment = new StepDetailFragment();
+            //Add the fragment to its container using a FragmentManager and a Transaction
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .add(R.id.step_container, stepDetailFragment)
+                    .commit();
+        }
+
 
     }
 
@@ -68,7 +71,7 @@ public class StepDetailActivity extends AppCompatActivity {
                         if (extras != null) {
                             /*Also put populate the current recipe object*/
                             step = (Step) extras.getParcelable(EXTRA_STEP);
-                            Timber.d("This step: " + step.getShortDescription());
+                            Timber.d("This step: stepid: %d,  %s", step.getId(), step.getShortDescription());
                             return;
                         }
                     }
