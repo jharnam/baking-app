@@ -15,31 +15,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
             <ImageButton
                 android:id="@+id/button_previous"
                 style="@style/ImageButtonStyle"
                 android:contentDescription="Previous button"
                 android:src="@android:drawable/ic_media_previous"
+                app:layout_constraintEnd_toStartOf="@+id/text_view_step_id"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <TextView
                 android:id="@+id/text_view_step_id"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/margin_48dp"
                 android:layout_margin="@dimen/margin_16dp"
-                tools:text="Step 5 of 5"
+                android:gravity="center"
                 android:textSize="@dimen/size_16sp"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toStartOf="@+id/button_next"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/button_previous"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Step 5 of 5" />
 
             <ImageButton
                 android:id="@+id/button_next"
                 style="@style/ImageButtonStyle"
                 android:contentDescription="Next button"
+                android:gravity="center_vertical"
                 android:src="@android:drawable/ic_media_next"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/text_view_step_id"
@@ -92,6 +95,13 @@
                     android:textSize="@dimen/size_16sp" />
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
