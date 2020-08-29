@@ -9,11 +9,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.databinding.ActivityRecipeDetailBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
+import com.example.android.jitsbankingtime.model.Step;
 import com.example.android.jitsbankingtime.ui.adapters.DetailPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
@@ -26,6 +28,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private ActivityRecipeDetailBinding binding;
     private Recipe recipe;
+
+    //A single-pane display refers to phone screens, and two-pane to larger tablet screens
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,29 +59,63 @@ public class RecipeDetailActivity extends AppCompatActivity {
         // Get the recipe data that was sent from the MainActivity
         populateRecipeFromIntent();
 
+        //Handle the two pane case
+
+
+        if (binding.stepDetailContainer != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (>600dp).
+            // If this view is present, then the
+            // activity should be in two-pane mode.
+            mTwoPane = true;
+            if (savedInstanceState == null) {
+                //Create the StepDetailFragment
+                StepDetailFragment stepDetailFragment = new StepDetailFragment();
+                //Get the 0th Step
+                Step step = recipe.getSteps().get(0);
+
+                //initialize details of the 0th step in the fragment
+                stepDetailFragment.setStep(step);
+                stepDetailFragment.setCurrentStepId(0);
+
+                //Add the fragment to its container using a FragmentManager and a Transaction
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .add(R.id.step_detail_container, stepDetailFragment)
+                        .commit();
+            }
+        } else {
+            mTwoPane = false;
+
+            // Display the number of servings
+            binding.textViewServings.setText(String.valueOf(recipe.getServings()));
+
+            // Setup TabLayout with ViewPager
+            setupUI();
+
+            setCollapsingToolbarTextColor();
+
+        }
+        // Get the recipe data that was sent from the MainActivity
+        populateRecipeFromIntent();
+
         // Set the title for a selected recipe
         setTitle(recipe.getName());
-        //setTitle("Jharna");
-
-        // Display the number of servings
-        binding.textViewServings.setText(String.valueOf(recipe.getServings()));
-
-        // Setup TabLayout with ViewPager
-        setupUI();
-
-        setCollapsingToolbarTextColor();
 
         // Show the up button in the actionbar
         showUpButton();
     }
 
     private void showUpButton() {
-        setSupportActionBar(binding.toolbar);
+        if (mTwoPane == false) {
+            setSupportActionBar(binding.toolbar);
+        }
         //getSupportActionBar().setDisplayShowTitleEnabled(true);
         //getSupportActionBar().setTitle("now this");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(true);;
+            actionBar.setDisplayShowTitleEnabled(true);
+            ;
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }

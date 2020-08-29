@@ -59,6 +59,8 @@ import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_ST
 public class StepDetailFragment extends Fragment {
     private FragmentStepDetailBinding binding;
     private Step step;
+
+
     private int currentStepId;
     private Recipe recipe;
 
@@ -162,7 +164,7 @@ public class StepDetailFragment extends Fragment {
                     stepDetailFragment.step = recipe.getSteps().get(currentStepId);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.beginTransaction()
-                            .replace(R.id.step_container, stepDetailFragment)
+                            .replace(R.id.step_detail_container, stepDetailFragment)
                             .commit();
                 } else {
                     Toast.makeText(getContext(), "Can't go further. Nothing after this step!",
@@ -183,7 +185,7 @@ public class StepDetailFragment extends Fragment {
                     stepDetailFragment.step = recipe.getSteps().get(currentStepId);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.beginTransaction()
-                            .replace(R.id.step_container, stepDetailFragment)
+                            .replace(R.id.step_detail_container, stepDetailFragment)
                             .commit();
                 } else {
                     Toast.makeText(getContext(), "Can't go further. Nothing before this step!",
@@ -268,6 +270,14 @@ public class StepDetailFragment extends Fragment {
         } else {
             containsVideo = true;
         }
+    }
+
+    public void setStep(Step step) {
+        this.step = step;
+    }
+
+    public void setCurrentStepId(int currentStepId) {
+        this.currentStepId = currentStepId;
     }
 
     @Override

@@ -46,7 +46,7 @@ public class StepDetailActivity extends AppCompatActivity {
             //Add the fragment to its container using a FragmentManager and a Transaction
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.step_container, stepDetailFragment)
+                    .add(R.id.step_detail_container, stepDetailFragment)
                     .commit();
         }
 

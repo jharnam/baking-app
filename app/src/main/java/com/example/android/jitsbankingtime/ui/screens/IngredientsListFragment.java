@@ -48,8 +48,10 @@ public class IngredientsListFragment extends Fragment {
 
     private void populateRecipeDetails() {
         if (recipe == null){
-            recipe =((RecipeDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
+            Timber.d("recipe is currently null");
+            recipe = ((RecipeDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
         }
+        Timber.d("recipe has %d ingredients", recipe.getIngredients().size());
     }
 
     private void populateRecipeFromIntent() {
@@ -59,7 +61,7 @@ public class IngredientsListFragment extends Fragment {
             if (intentThatStartedThisActivity.hasExtra(EXTRA_RECIPE)) {
                 extras = intentThatStartedThisActivity.getBundleExtra(EXTRA_RECIPE);
                 if (extras != null) {
-                    /*Also put populate the current recipe object*/
+                    //Also populate the current recipe object
                     recipe = (Recipe) extras.getParcelable(EXTRA_RECIPE);
                     Timber.d("This recipe: " + recipe.getName());
                     return;
@@ -83,14 +85,15 @@ public class IngredientsListFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_ingredients, container, false);
 
         //TODO should we call this again?
-        populateRecipeDetails();
+        //populateRecipeDetails();
+        populateRecipeFromIntent();
 
         ingredientsListRecyclerView = binding.recyclerViewIngredients;
 
         // Initialize a IngredientAdapter
         initAdapter();
-        
-       //return super.onCreateView(inflater, container, savedInstanceState);
+
+        //return super.onCreateView(inflater, container, savedInstanceState);
         return binding.getRoot();
     }
 

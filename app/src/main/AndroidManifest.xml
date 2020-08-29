@@ -36,7 +36,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.screens.RecipeDetailActivity" />
         </activity>
-
     </application>
 
 </manifest>

@@ -85,7 +85,8 @@ public class StepsListFragment extends Fragment implements StepsListAdapter.Step
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_steps, container, false);
 
         //TODO should we call this again?
-        populateRecipeDetails();
+        //populateRecipeDetails();
+        populateRecipeFromIntent();
 
         stepsListRecyclerView = binding.recyclerViewSteps;
 
