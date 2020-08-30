@@ -12,6 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".ui.widget.BakingTimeAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_time_app_widget_info" />
+        </receiver>
+
         <activity android:name=".ui.screens.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +31,9 @@
         </activity>
         <activity
             android:name=".ui.screens.RecipeDetailActivity"
-            android:theme="@style/DetailTheme"
             android:launchMode="singleTop"
-            android:parentActivityName=".ui.screens.MainActivity">
+            android:parentActivityName=".ui.screens.MainActivity"
+            android:theme="@style/DetailTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.screens.MainActivity" />

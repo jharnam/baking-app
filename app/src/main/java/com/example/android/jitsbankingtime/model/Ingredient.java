@@ -69,4 +69,13 @@ public class Ingredient implements Parcelable {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "quantity=" + quantity +
+                ", measure='" + measure + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

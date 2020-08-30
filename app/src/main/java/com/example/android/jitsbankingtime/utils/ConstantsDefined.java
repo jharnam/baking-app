@@ -44,5 +44,11 @@ public final class ConstantsDefined {
          **/
         public static final int INGREDIENTS = 0;
         public static final int STEPS = 1;
+
+        /**
+         * Default values for SharedPreferences
+         */
+        public static final String DEFAULT_STRING = "";
+
 }
 

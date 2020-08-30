@@ -196,9 +196,11 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void populateRecipeAndStepDetails(Bundle savedInstanceState) {
+        Timber.d("inside populateRecipeAndStepDetails");
         //if the saved state exists, ....
         if (savedInstanceState != null) {
             //...retrieve the relevant data from there
+            Timber.d("saved state exists");
             recipe = savedInstanceState.getParcelable(SAVE_RECIPE);
             step = savedInstanceState.getParcelable(SAVE_STEP);
             currentStepId = savedInstanceState.getInt(SAVE_CURRENT_STEP_ID);
@@ -209,11 +211,13 @@ public class StepDetailFragment extends Fragment {
 
         } else {
             //...get it from the activity
+            Timber.d("trying to get the recipe and step details from another activity");
             if (recipe == null) {
                 recipe = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
             }
             if (step == null) {
                 step = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getStep();
+                //TODO step = recipe.getSteps().get(0);
                 currentStepId = step.getId();
 
             }
@@ -421,6 +425,10 @@ public class StepDetailFragment extends Fragment {
         outState.putInt(SAVE_CURRENT_WINDOW, currentWindow);
         outState.putBoolean(SAVE_PLAY_WHEN_READY, playWhenReady);
 
+    }
+
+    public void setRecipe(Recipe incomingRecipe) {
+        recipe = incomingRecipe;
     }
 
     private class PlaybackStateListener implements Player.EventListener {

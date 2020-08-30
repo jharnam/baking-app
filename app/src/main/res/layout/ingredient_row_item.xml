@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="UNITS" />
 
-        <!-- Display ingredient -->
+        <!-- Display the ingredient name -->
         <TextView
             android:id="@+id/text_view_ingredient_name"
             android:layout_width="0dp"

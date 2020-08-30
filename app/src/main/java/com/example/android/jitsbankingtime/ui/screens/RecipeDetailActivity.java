@@ -53,14 +53,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
             // large-screen layouts (>600dp).
             // If this view is present, then the
             // activity should be in two-pane mode.
+            Timber.d("this is the 2 pane mode");
             mTwoPane = true;
             if (savedInstanceState == null) {
+                Timber.d("we dont have saved instance state");
                 //Create the StepDetailFragment
                 StepDetailFragment stepDetailFragment = new StepDetailFragment();
                 //Get the 0th Step
                 Step step = recipe.getSteps().get(0);
 
                 //initialize details of the 0th step in the fragment
+                stepDetailFragment.setRecipe(recipe);
                 stepDetailFragment.setStep(step);
                 stepDetailFragment.setCurrentStepId(0);
 

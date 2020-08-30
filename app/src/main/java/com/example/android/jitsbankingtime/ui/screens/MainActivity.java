@@ -2,6 +2,7 @@ package com.example.android.jitsbankingtime.ui.screens;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -130,6 +131,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onClick(Recipe currentRecipe) {
         Timber.d("inside the onClick in MainActivity");
+
+        //update shared preferences to the current recipes - for widget
+        SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.pref_recipe_name_key), currentRecipe.getName());
+        editor.putString(getString(R.string.pref_ingredients_key), currentRecipe.getIngredients().toString());
+
+        editor.apply();
+
 
         Context context = this;
         Class destinationClass = RecipeDetailActivity.class;
