@@ -25,13 +25,16 @@ import java.util.Objects;
 import timber.log.Timber;
 
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_RECIPE;
-import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_STEP;
 
-public class StepsListFragment extends Fragment implements StepsListAdapter.StepAdapterOnClickHandler{
+public class StepsListFragment extends Fragment implements StepsListAdapter.StepAdapterOnClickHandler {
     FragmentStepsBinding binding;
     Recipe recipe;
     private StepsListAdapter stepsListAdapter;
     private RecyclerView stepsListRecyclerView;
+
+    //Define a new interface that triggers a callback in the host activity
+    //This is for communication with/via the host activity (with other fragments)
+    private OnStepClickListener stepClickListenerCallback;
 
 
     //required empty constructor
@@ -118,20 +121,29 @@ public class StepsListFragment extends Fragment implements StepsListAdapter.Step
     }
 
     @Override
-    public void onStepClick(Step currentStep) {
-        //start the StepDetailActivity
-        Context context = this.getContext();
-        Class destinationClass = StepDetailActivity.class;
-        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+    public void onStepClick(Step stepClickedOn) {
+        //Trigger the callback method
+        stepClickListenerCallback.onStepSelected(stepClickedOn);
+    }
 
-        // Pass the Data to the DetailActivity
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRA_STEP, currentStep);
-        bundle.putParcelable(EXTRA_RECIPE, recipe);
+    //to make sure the host activity implements the callback for the OnStepClickListener
+    //interface to aid communication between fragment and host activity
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
-        intentToStartDetailActivity.putExtra(EXTRA_RECIPE, bundle);
-        intentToStartDetailActivity.putExtra(EXTRA_STEP, bundle);
-        startActivity(intentToStartDetailActivity);
+        try {
+            //if the host activity has not implemented the callback,
+            // an exception is thrown
+            stepClickListenerCallback = (OnStepClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnStepClickListener");
+        }
+    }
 
+    //OnStepClickListener interface, calls a method in the host activity
+    public interface OnStepClickListener {
+        void onStepSelected(Step stepClickedOn);
     }
 }

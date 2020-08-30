@@ -4,15 +4,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="com.example.android.jitsbankingtime.ui.screens.RecipeDetailActivity">
+
+        <!-- The static MasterListFragment -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +21,7 @@
             android:showDividers="middle">
 
             <!-- Ingredients list fragment -->
-            <fragment
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/master_list_ingredients_fragment"
                 android:name="com.example.android.jitsbankingtime.ui.screens.IngredientsListFragment"
                 android:layout_width="0dp"
@@ -51,14 +49,13 @@
         </LinearLayout>
 
 
-        <!-- The static MasterListFragment -->
-
         <FrameLayout
             android:id="@+id/step_detail_container"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3" />
+            android:layout_weight="3"
+            android:scaleType="centerInside" />
 
-        <!-- include layout="@layout/fragment_step_detail" /> -->
+        <include layout="@layout/fragment_step_detail" />
     </LinearLayout>
 </layout>

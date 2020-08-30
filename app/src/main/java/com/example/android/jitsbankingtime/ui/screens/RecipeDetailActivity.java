@@ -1,5 +1,6 @@
 package com.example.android.jitsbankingtime.ui.screens;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,8 +24,9 @@ import com.squareup.picasso.Picasso;
 import timber.log.Timber;
 
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_RECIPE;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_STEP;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity implements StepsListFragment.OnStepClickListener {
 
     private ActivityRecipeDetailBinding binding;
     private Recipe recipe;
@@ -37,23 +39,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab());
-        binding.tabLayout.addTab(binding.tabLayout.newTab());
 
-        // Set gravity for the TabLayout
-        binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        // Find the view pager that will allow the user to swipe between fragments
-        //ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        binding.tabLayout.setupWithViewPager(binding.viewPager);
-
-
-        // Create an adapter that knows which fragment should be shown on each page
-        DetailPagerAdapter adapter = new DetailPagerAdapter(getSupportFragmentManager(),
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, binding.tabLayout.getTabCount());
-
-        // Set the adapter onto the view pager
-        binding.viewPager.setAdapter(adapter);
         //TODO initOnClickListenersForTextViews();
 
         // Get the recipe data that was sent from the MainActivity
@@ -86,6 +72,24 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         } else {
             mTwoPane = false;
+
+            binding.tabLayout.addTab(binding.tabLayout.newTab());
+            binding.tabLayout.addTab(binding.tabLayout.newTab());
+
+            // Set gravity for the TabLayout
+            binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+            // Find the view pager that will allow the user to swipe between fragments
+            //ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+            binding.tabLayout.setupWithViewPager(binding.viewPager);
+
+
+            // Create an adapter that knows which fragment should be shown on each page
+            DetailPagerAdapter adapter = new DetailPagerAdapter(getSupportFragmentManager(),
+                    FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, binding.tabLayout.getTabCount());
+
+            // Set the adapter onto the view pager
+            binding.viewPager.setAdapter(adapter);
 
             // Display the number of servings
             binding.textViewServings.setText(String.valueOf(recipe.getServings()));
@@ -198,5 +202,40 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onStepSelected(Step stepClickedOn) {
+        if (stepClickedOn != null) {
+            if (mTwoPane) {
+                // this is for tablets
+                StepDetailFragment stepDetailFragment = new StepDetailFragment();
+                stepDetailFragment.setCurrentStepId(stepClickedOn.getId());
+                stepDetailFragment.setStep(stepClickedOn);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.step_detail_container, stepDetailFragment)
+                        .commit();
+
+            } else {
+                //this is for phones
+                //start the StepDetailActivity
+                Context context = this;
+                Class destinationClass = StepDetailActivity.class;
+                Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+
+                // Pass the Data to the DetailActivity
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(EXTRA_STEP, stepClickedOn);
+                bundle.putParcelable(EXTRA_RECIPE, recipe);
+
+                intentToStartDetailActivity.putExtra(EXTRA_RECIPE, bundle);
+                intentToStartDetailActivity.putExtra(EXTRA_STEP, bundle);
+                startActivity(intentToStartDetailActivity);
+            }
+        } else {
+            Timber.e("Step was clicked, but it is null, doing nothing..");
+        }
+
     }
 }
