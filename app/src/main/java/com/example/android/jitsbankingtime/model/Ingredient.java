@@ -70,6 +70,7 @@ public class Ingredient implements Parcelable {
         this.name = name;
     }
 
+    /*
     @Override
     public String toString() {
         return "Ingredient{" +
@@ -78,4 +79,6 @@ public class Ingredient implements Parcelable {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+     */
 }

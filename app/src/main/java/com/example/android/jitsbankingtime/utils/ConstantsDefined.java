@@ -39,16 +39,23 @@ public final class ConstantsDefined {
          * The number of pages
          */
         public static final int PAGE_COUNT = TAB_NAMES.length;
-        /**
-         * Constants for the fragments/tabs in a recipe
-         **/
-        public static final int INGREDIENTS = 0;
-        public static final int STEPS = 1;
+    /**
+     * Constants for the fragments/tabs in a recipe
+     **/
+    public static final int INGREDIENTS = 0;
+    public static final int STEPS = 1;
 
-        /**
-         * Default values for SharedPreferences
-         */
-        public static final String DEFAULT_STRING = "";
+    /**
+     * Default values for SharedPreferences
+     */
+    public static final String DEFAULT_STRING = "";
+    public static final long DEFAULT_LONG = 1;
+    public static final int DEFAULT_INT = 1;
+
+    /**
+     * Widget Pending Intent id
+     */
+    public static final int WIDGET_PENDING_INTENT_ID = 0;
 
 }
 

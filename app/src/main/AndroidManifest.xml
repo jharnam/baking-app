@@ -46,6 +46,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.screens.RecipeDetailActivity" />
         </activity>
+
+        <service
+            android:name=".ui.widget.WidgetListService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

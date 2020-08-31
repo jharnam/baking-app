@@ -1,8 +1,11 @@
 package com.example.android.jitsbankingtime.ui.screens;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,8 @@ import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.databinding.ActivityMainBinding;
 import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.ui.adapters.RecipesListAdapter;
+import com.example.android.jitsbankingtime.ui.widget.BakingTimeAppWidget;
+import com.example.android.jitsbankingtime.utils.SharedPrefUtils;
 
 import java.util.List;
 
@@ -137,9 +142,21 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.pref_recipe_name_key), currentRecipe.getName());
-        editor.putString(getString(R.string.pref_ingredients_key), currentRecipe.getIngredients().toString());
+
+        String ingredientsString = SharedPrefUtils.toIngredientsString(currentRecipe.getIngredients());
+        editor.putString(getString(R.string.pref_ingredients_key), ingredientsString);
+
+        String stepsString = SharedPrefUtils.toStepsString(currentRecipe.getSteps());
+        editor.putString(getString(R.string.pref_steps_key), stepsString);
+
+        editor.putLong(getString(R.string.pref_recipe_id_key), currentRecipe.getId());
+        editor.putString(getString(R.string.pref_image_key), currentRecipe.getImage());
+        editor.putInt(getString(R.string.pref_num_servings_key), currentRecipe.getServings());
 
         editor.apply();
+
+        //Send the update broadcast to the app widget
+        sendBroadcastToWidget();
 
 
         Context context = this;
@@ -152,6 +169,23 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         intentToStartRecipeDetailActivity.putExtra(EXTRA_RECIPE, bundle);
         startActivity(intentToStartRecipeDetailActivity);
+
+
+    }
+
+    //https://stackoverflow.com/questions/10663800/sending-an-update-broadcast-to-an-app-widget
+    private void sendBroadcastToWidget() {
+        ComponentName provider = new ComponentName(this, BakingTimeAppWidget.class);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] ids = appWidgetManager.getAppWidgetIds(provider);
+
+        Intent updateWidgetIntent = new Intent();
+        updateWidgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateWidgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, ids);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.widget_ingredients_list_view);
+
+        sendBroadcast(updateWidgetIntent);
 
 
     }
