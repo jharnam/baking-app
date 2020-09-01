@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+     This layout is a two-pane layout for the summary/detail flow.
+ -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:context="com.example.android.jitsbankingtime.ui.screens.RecipeDetailActivity">
+
+        <!-- The static MasterListFragment -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:divider="?android:attr/dividerHorizontal"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <!-- Ingredients list fragment -->
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/master_list_ingredients_fragment"
+                android:name="com.example.android.jitsbankingtime.ui.screens.IngredientsListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+
+            </fragment>
+
+
+            <!-- Steps list fragment -->
+            <fragment
+                android:id="@+id/master_list_steps_fragment"
+                android:name="com.example.android.jitsbankingtime.ui.screens.StepsListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+
+            </fragment>
+
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/step_detail_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
+</layout>
