@@ -43,6 +43,9 @@ public class StepDetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             //Create the StepDetailFragment
             StepDetailFragment stepDetailFragment = new StepDetailFragment();
+
+            stepDetailFragment.setStep(step);
+            stepDetailFragment.setRecipe(recipe);
             //Add the fragment to its container using a FragmentManager and a Transaction
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
