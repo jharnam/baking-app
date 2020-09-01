@@ -46,8 +46,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
         populateRecipeFromIntent();
 
         //Handle the two pane case
-
-
         if (binding.stepDetailContainer != null) {
             // The detail container view will be present only in the
             // large-screen layouts (>600dp).
@@ -57,11 +55,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
             mTwoPane = true;
             if (savedInstanceState == null) {
                 Timber.d("we dont have saved instance state");
-                //Create the StepDetailFragment
-                StepDetailFragment stepDetailFragment = new StepDetailFragment();
+
                 //Get the 0th Step
                 Step step = recipe.getSteps().get(0);
 
+                //Create the StepDetailFragment
+                StepDetailFragment stepDetailFragment = new StepDetailFragment();
                 //initialize details of the 0th step in the fragment
                 stepDetailFragment.setRecipe(recipe);
                 stepDetailFragment.setStep(step);
@@ -104,7 +103,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
 
         }
         // Get the recipe data that was sent from the MainActivity
-        populateRecipeFromIntent();
+        //TODO why is this called a second time populateRecipeFromIntent();
 
         // Set the title for a selected recipe
         setTitle(recipe.getName());

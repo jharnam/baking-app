@@ -1,6 +1,7 @@
 package com.example.android.jitsbankingtime.ui.screens;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -43,12 +44,12 @@ import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
-import java.util.Objects;
-
 import timber.log.Timber;
 
 import static android.view.View.GONE;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.APP_NAME;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_RECIPE;
+import static com.example.android.jitsbankingtime.utils.ConstantsDefined.EXTRA_STEP;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_CURRENT_STEP_ID;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_CURRENT_WINDOW;
 import static com.example.android.jitsbankingtime.utils.ConstantsDefined.SAVE_PLAYBACK_POSITION;
@@ -119,6 +120,7 @@ public class StepDetailFragment extends Fragment {
 
         return binding.getRoot();
     }
+
 
     private void initializeMediaSession() {
         // Create a MediaSessionCompat.
@@ -212,15 +214,31 @@ public class StepDetailFragment extends Fragment {
         } else {
             //...get it from the activity
             Timber.d("trying to get the recipe and step details from another activity");
+
+            //TODO - this should be set up as newInstance, getArguments
+            //https://google-developer-training.github.io/android-developer-advanced-course-concepts/unit-1-expand-the-user-experience/lesson-1-fragments/1-2-c-fragment-lifecycle-and-communications/1-2-c-fragment-lifecycle-and-communications.html
+
             if (recipe == null) {
-                recipe = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getRecipe();
+                Intent intent = getActivity().getIntent();
+                if (intent != null) {
+                    if (intent.hasExtra(EXTRA_RECIPE)) {
+                        Bundle b = intent.getBundleExtra(EXTRA_RECIPE);
+                        recipe = b.getParcelable(EXTRA_RECIPE);
+                    }
+                }
             }
             if (step == null) {
-                step = ((StepDetailActivity) Objects.requireNonNull(getActivity())).getStep();
-                //TODO step = recipe.getSteps().get(0);
-                currentStepId = step.getId();
-
+                Intent intent = getActivity().getIntent();
+                if (intent != null) {
+                    if (intent.hasExtra(EXTRA_STEP)) {
+                        Bundle b = intent.getBundleExtra(EXTRA_STEP);
+                        step = b.getParcelable(EXTRA_STEP);
+                    }
+                }
             }
+            //now we have the step, set the current step id
+            currentStepId = step.getId();
+
             // Clear the start position
             currentWindow = C.INDEX_UNSET;
             playbackPosition = C.TIME_UNSET;
