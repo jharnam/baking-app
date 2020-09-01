@@ -138,6 +138,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, WIDGET_PENDING_INTENT_ID,
                 intentToStartActivity, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setPendingIntentTemplate(R.id.widget_ingredients_list_view, pendingIntent);
+        //TODO views.setOnClickPendingIntent(R.id.recipe_name_widget_tv, pendingIntent);
 
         return views;
 
