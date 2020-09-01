@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:baselineAligned="false"
             android:divider="?android:attr/dividerHorizontal"
@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <!--include layout="@layout/fragment_ingredients" />-->
 
             </fragment>
 
@@ -42,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <!--include layout="@layout/fragment_steps" /> -->
 
             </fragment>
 
