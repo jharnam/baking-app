@@ -65,7 +65,6 @@ public class StepDetailFragment extends Fragment {
     private int currentStepId;
     private Recipe recipe;
 
-    //TODO private ExoPlayer mediaPlayer;
     private SimpleExoPlayer mediaPlayer;
     private PlaybackStateListener playbackStateListener;
 

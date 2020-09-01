@@ -102,8 +102,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
             setCollapsingToolbarTextColor();
 
         }
-        // Get the recipe data that was sent from the MainActivity
-        //TODO why is this called a second time populateRecipeFromIntent();
 
         // Set the title for a selected recipe
         setTitle(recipe.getName());
