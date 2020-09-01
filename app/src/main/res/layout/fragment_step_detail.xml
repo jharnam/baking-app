@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_16dp"
-                    android:text="@string/description_of_the_recipe_step"
+                    tools:text="@string/description_of_the_recipe_step"
                     android:textSize="@dimen/size_16sp" />
 
             </androidx.cardview.widget.CardView>
