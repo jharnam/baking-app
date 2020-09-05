@@ -2,70 +2,45 @@ package com.example.android.jitsbankingtime.ui.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.android.jitsbankingtime.R;
 import com.example.android.jitsbankingtime.model.Ingredient;
+import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.utils.SharedPrefUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
 
-import static com.example.android.jitsbankingtime.utils.ConstantsDefined.DEFAULT_STRING;
-
-public class WidgetListService extends RemoteViewsService {
-    @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new ListProviderRemoteViewsFactory(this.getApplicationContext(),
-                intent);
-    }
-}
-
-
 //Acts as the Adapter for our listview in the widget
-class ListProviderRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    private Context context;
-    Intent intent;
-    private List<Ingredient> ingredientsList = new ArrayList<>();
+public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory {
 
-    public ListProviderRemoteViewsFactory(Context context, Intent intent) {
+    //TODO List<String> ingredientsList = new ArrayList<> ();
+    Context context;
+    Intent intent;
+    Recipe recipe; //this is our collection
+
+    public WidgetDataProvider(Context context, Intent intent) {
         this.context = context;
         this.intent = intent;
     }
 
-    private void initData() {
-        ingredientsList.clear();
-        //TODO more
-
-    }
-
     @Override
     public void onCreate() {
-        initData();
-
+        //initialize the data
+        //done in onDataSetChanged()
     }
 
-    //called on Start and when notifyAppWidgetViewDataChanged is called
-    //TODO call notifyAppWidgetViewDataChanged to the service whenever we ask the
-    // intentservice to update the widget - to notify the listview that the data
-    //has changed
+    //called on start and when notifyAppWidgetViewDataChanged is called
     @Override
     public void onDataSetChanged() {
-        Timber.d("jkm - onDataSetChanged");
-        //TODO more
-        initData();
-        //Get the updated list of ingredients from the shared preference
-        SharedPreferences sharedPref = context.getSharedPreferences
-                (context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String ingredientsListString = sharedPref.getString(
-                context.getString(R.string.pref_ingredients_key), DEFAULT_STRING);
+        //initialize the data
+        //data is in shared preferences, get it
+        recipe = SharedPrefUtils.retrieveRecipe(context);
 
-        //Convert the string to a list of ingredient objects
-        ingredientsList = SharedPrefUtils.toListOfIngredients(ingredientsListString);
+
     }
 
     @Override
@@ -75,8 +50,11 @@ class ListProviderRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public int getCount() {
-        if (ingredientsList == null) return 0;
-        return ingredientsList.size();
+        if (recipe != null && recipe.getIngredients() != null)
+            return recipe.getIngredients().size();
+        Timber.d("jkm: getCount is 0");
+        if (recipe == null) Timber.e("jkm : Recipe is null");
+        return 0;
     }
 
     /**
@@ -88,8 +66,10 @@ class ListProviderRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
      */
     @Override
     public RemoteViews getViewAt(int position) {
-        Timber.d("jkm: inside getViewAt(), position is: %d", position);
-        if (ingredientsList == null || ingredientsList.size() == 0) return null;
+        Timber.d("jkm1: inside getViewAt(), position is: %d", position);
+        if (recipe == null || recipe.getIngredients() == null
+                || recipe.getIngredients().size() == 0) return null;
+        List<Ingredient> ingredientsList = recipe.getIngredients();
         Ingredient ingredient = ingredientsList.get(position);
 
         float quantity = ingredient.getQuantity();
@@ -112,7 +92,7 @@ class ListProviderRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public int getViewTypeCount() {
-        return 1; //Treat all items in the ListView the same
+        return 1; // Treat all items in the ListView the same
     }
 
     @Override
@@ -125,4 +105,3 @@ class ListProviderRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         return true;
     }
 }
-

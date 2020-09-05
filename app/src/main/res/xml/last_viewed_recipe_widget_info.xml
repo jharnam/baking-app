@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialKeyguardLayout="@layout/widget_baking_time"
-    android:initialLayout="@layout/widget_baking_time"
-    android:minWidth="110dp"
+    android:initialKeyguardLayout="@layout/last_viewed_recipe_widget"
+    android:initialLayout="@layout/last_viewed_recipe_widget"
+    android:minWidth="180dp"
     android:minHeight="110dp"
-    android:minResizeWidth="40dp"
-    android:minResizeHeight="40dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewImage="@drawable/recipe_placeholder_icon"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"></appwidget-provider>

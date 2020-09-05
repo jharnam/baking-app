@@ -12,6 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".ui.widget.LastViewedRecipeWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/last_viewed_recipe_widget_info" />
+        </receiver>
+        <!--
         <receiver android:name=".ui.widget.BakingTimeAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -21,6 +31,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/baking_time_app_widget_info" />
         </receiver>
+        -->
 
         <activity android:name=".ui.screens.MainActivity">
             <intent-filter>
@@ -47,9 +58,16 @@
                 android:value=".ui.screens.RecipeDetailActivity" />
         </activity>
 
+        <!--
         <service
             android:name=".ui.widget.WidgetListService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+            -->
+
+        <service
+            android:name=".ui.widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

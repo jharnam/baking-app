@@ -9,7 +9,7 @@
 
     <!-- First the recipe name -->
     <TextView
-        android:id="@+id/recipe_name_widget_tv1"
+        android:id="@+id/recipe_name_widget_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -24,14 +24,14 @@
 
         <!-- ingredient list -->
         <ListView
+            android:id="@+id/widget_ingredients_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/widget_ingredients_list_view1"
             tools:listitem="@layout/widget_list_item" />
 
         <!-- handle case when the widget has no data yet -->
         <RelativeLayout
-            android:id="@+id/widget_empty_view1"
+            android:id="@+id/widget_empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
