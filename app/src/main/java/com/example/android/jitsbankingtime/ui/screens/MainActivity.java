@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private RecipesListAdapter recipesListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ActivityMainBinding binding;
+    private Context context;
 
 
     @Override
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         // Inflate the content view (replacing `setContentView`)
         //setContentView(R.layout.activity_main);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        context = this;
 
         //recipesListRecyclerView = findViewById(R.id.recycler_view_recipes);
         recipesListRecyclerView = binding.recyclerViewRecipes;
@@ -90,18 +93,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     IdlingResourceUtils.setIdlingResource(true);
                     Timber.d("Number of Recipes Received: %s", recipesList.size());
 
-                    //enableMoviePostersRecyclerView();
-                    //moviePosterRecyclerView.setAdapter(movieOuterAdapter);
-                    //if (mMovieAdapter == null) {
-                    //mMovieAdapter = new MovieAdapter(movieList, MainActivity.this, context,false);
-
-                    //mRecyclerView.setAdapter(mMovieAdapter);
-                    //mRecyclerView.setHasFixedSize(true);
-
-                    //} else {
-                    //    mMovieAdapter.updateRecyclerData(movieList,false);
-                    //    mMovieAdapter.notifyDataSetChanged();
-                    //}
                 } else {
 
                     Timber.e("Failed to load list of recipes");
@@ -116,15 +107,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 IdlingResourceUtils.setIdlingResource(false);
                 //Toast.makeText(application.getApplicationContext(), R.string.connectivity_error_text,
                 //       Toast.LENGTH_LONG).show();
-                //TODO - implement Alert
-                /*
-                / if we have a network error, prompt a dialog asking to retry or exit
+
+                // in case of network error, prompt a dialog asking to retry or exit
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(R.string.main_no_network)
-                        .setNegativeButton(R.string.main_no_network_try_again, (dialog, id) -> loadJSON())
-                        .setPositiveButton(R.string.main_no_network_close, (dialog, id) -> finish());
+                builder.setMessage(R.string.no_network)
+                        .setNegativeButton(R.string.no_network_try_again, (dialog, id) -> retrieveAndLoadJson())
+                        .setPositiveButton(R.string.no_network_close, (dialog, id) -> finish());
                 builder.create().show();
-                 */
+
 
             }
         });

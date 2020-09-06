@@ -25,4 +25,10 @@
     <string name="pref_num_servings_key">pref_num_servings</string>
     <string name="empty_widget_text">Click a recipe to view ingredients here</string>
     <string name="title_italic">italic</string>
+
+    <!-- Handling no connectivity case -->
+    <string name="no_network">Connectivity problems :( \n\nThis application requires network connection</string>
+    <string name="no_network_try_again">Try Again</string>
+    <string name="no_network_close">Close App</string>
+
 </resources>

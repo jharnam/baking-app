@@ -284,8 +284,6 @@ public class StepDetailFragment extends Fragment {
                 containsVideo = false;
                 binding.playerView.setVisibility(GONE);
 
-                //display default image using Picasso
-                //TODO
                 binding.imageViewStepDefault.setImageResource(R.drawable.recipe_placeholder_icon);
             }
         } else {
@@ -391,8 +389,6 @@ public class StepDetailFragment extends Fragment {
         if (mediaPlayer != null) {
             retrieveCurrentPlayerPosition();
             mediaPlayer.removeListener(playbackStateListener);
-
-            //TODO mediaPlayer.stop();
 
             mediaPlayer.release();
             mediaPlayer = null;
