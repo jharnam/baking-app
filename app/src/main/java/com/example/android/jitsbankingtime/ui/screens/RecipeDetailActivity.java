@@ -207,8 +207,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
 
     @Override
     public boolean onSupportNavigateUp() {
+        onBackPressed();
         return super.onSupportNavigateUp();
     }
+
 
     @Override
     public void onStepSelected(Step stepClickedOn) {
