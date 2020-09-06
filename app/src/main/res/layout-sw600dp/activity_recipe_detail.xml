@@ -23,10 +23,10 @@
 
             <!-- Ingredients list fragment -->
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/master_list_ingredients_fragment"
+                android:id="@+id/main_list_ingredients_fragment"
                 android:name="com.example.android.jitsbankingtime.ui.screens.IngredientsListFragment"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1">
 
 
@@ -35,10 +35,10 @@
 
             <!-- Steps list fragment -->
             <fragment
-                android:id="@+id/master_list_steps_fragment"
+                android:id="@+id/main_list_steps_fragment"
                 android:name="com.example.android.jitsbankingtime.ui.screens.StepsListFragment"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1">
 
 

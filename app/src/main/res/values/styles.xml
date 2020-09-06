@@ -62,5 +62,10 @@
         <item name="colorControlNormal">@color/colorPrimaryDark</item>
     </style>
 
+    <!-- This configures the styles for the title within the Toolbar  -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/size_21sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 
 </resources>

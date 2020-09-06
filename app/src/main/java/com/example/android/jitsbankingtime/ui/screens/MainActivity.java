@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +19,7 @@ import com.example.android.jitsbankingtime.model.Recipe;
 import com.example.android.jitsbankingtime.ui.adapters.RecipesListAdapter;
 import com.example.android.jitsbankingtime.ui.widget.BakingTimeAppWidget;
 import com.example.android.jitsbankingtime.ui.widget.WidgetService;
+import com.example.android.jitsbankingtime.utils.IdlingResourceUtils;
 
 import java.util.List;
 
@@ -56,11 +56,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         //Add the swipe to refresh listener
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        //Testing related
+        IdlingResourceUtils.getIdlingResource();
+        IdlingResourceUtils.setIdlingResource(false);
+
         /*
         //retrieve the data to be displayed
          */
         retrieveAndLoadJson();
         recipesListRecyclerView.setAdapter(recipesListAdapter);
+
 
     }
 
@@ -82,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     recipesListAdapter.clearList();
                     List<Recipe> recipesList = recipesResponse.body();
                     recipesListAdapter.setRecipesList(recipesList);
-                    Timber.d( "Number of Recipes Received: %s", recipesList.size());
+                    IdlingResourceUtils.setIdlingResource(true);
+                    Timber.d("Number of Recipes Received: %s", recipesList.size());
 
                     //enableMoviePostersRecyclerView();
                     //moviePosterRecyclerView.setAdapter(movieOuterAdapter);
@@ -106,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Timber.d( "HTTP request failed: %s", t.getMessage());
+                Timber.d("HTTP request failed: %s", t.getMessage());
+                IdlingResourceUtils.setIdlingResource(false);
                 //Toast.makeText(application.getApplicationContext(), R.string.connectivity_error_text,
                 //       Toast.LENGTH_LONG).show();
                 //TODO - implement Alert
@@ -179,9 +186,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         updateWidgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateWidgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, ids);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.widget_ingredients_list_view);
-        }
+        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.widget_ingredients_list_view);
+
         sendBroadcast(updateWidgetIntent);
 
 

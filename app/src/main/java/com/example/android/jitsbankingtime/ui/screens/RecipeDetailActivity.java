@@ -103,26 +103,32 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
 
         }
 
-        // Set the title for a selected recipe
-        setTitle(recipe.getName());
 
         // Show the up button in the actionbar
         showUpButton();
+
+        // Set the title for a selected recipe
+        if (mTwoPane) {
+            String twoPaneTitle = recipe.getName() + "     Servings (" + recipe.getServings() + ")";
+            setTitle(twoPaneTitle);
+        } else {
+            setTitle(recipe.getName());
+        }
     }
 
     private void showUpButton() {
-        if (mTwoPane == false) {
+        if (!mTwoPane) {
             setSupportActionBar(binding.toolbar);
         }
-        //getSupportActionBar().setDisplayShowTitleEnabled(true);
-        //getSupportActionBar().setTitle("now this");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            Timber.d("jkm: actionBar is not null");
             actionBar.setDisplayShowTitleEnabled(true);
-            ;
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
+        Timber.d("jkm: actionBar who knows");
+
 
     }
 
@@ -159,7 +165,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
                 if (extras != null) {
                     /*Also put populate the current recipe object*/
                     recipe = (Recipe) extras.getParcelable(EXTRA_RECIPE);
-                    Timber.d("This recipe: " + recipe.getName());
+                    Timber.d("This recipe: %s", recipe.getName());
                     return;
                 }
             }
