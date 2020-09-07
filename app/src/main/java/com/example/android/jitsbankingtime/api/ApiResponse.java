@@ -1,12 +1,13 @@
 package com.example.android.jitsbankingtime.api;
 
-import androidx.annotation.Nullable;
-
-import java.io.IOException;
-
-import retrofit2.Response;
-import timber.log.Timber;
-
+/**
+ * This is currently not tested and hence not used. Opted for a simpler version
+ * of implementation, which has been tested.
+ * <p>
+ * Common class used by API responses.
+ *
+ * @param <T>
+ */
 /**
  * Common class used by API responses.
  * @param <T>
