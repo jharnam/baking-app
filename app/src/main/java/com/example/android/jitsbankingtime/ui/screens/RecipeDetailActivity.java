@@ -122,12 +122,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsList
         }
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            Timber.d("jkm: actionBar is not null");
+            Timber.d("actionBar is not null");
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
-        Timber.d("jkm: actionBar who knows");
+        Timber.d("actionBar who knows");
 
 
     }

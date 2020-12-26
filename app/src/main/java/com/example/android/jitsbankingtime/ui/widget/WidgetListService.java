@@ -55,7 +55,7 @@ class ListProviderRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
     //has changed
     @Override
     public void onDataSetChanged() {
-        Timber.d("jkm - onDataSetChanged");
+        Timber.d(" onDataSetChanged");
         //TODO more
         initData();
         //Get the updated list of ingredients from the shared preference
@@ -88,7 +88,7 @@ class ListProviderRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
      */
     @Override
     public RemoteViews getViewAt(int position) {
-        Timber.d("jkm: inside getViewAt(), position is: %d", position);
+        Timber.d("inside getViewAt(), position is: %d", position);
         if (ingredientsList == null || ingredientsList.size() == 0) return null;
         Ingredient ingredient = ingredientsList.get(position);
 

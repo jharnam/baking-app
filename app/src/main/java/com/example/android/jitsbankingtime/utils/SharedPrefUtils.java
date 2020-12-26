@@ -68,7 +68,7 @@ public class SharedPrefUtils {
 
     //update shared preferences to the current recipes - for widget
     public static void saveRecipe(Context context, Recipe saveThisRecipe) {
-        Timber.d("jkm : saveRecipe: %s", saveThisRecipe.toString());
+        Timber.d("saveRecipe: %s", saveThisRecipe.toString());
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -96,7 +96,7 @@ public class SharedPrefUtils {
 
         String recipeName = sharedPref.getString(
                 context.getString(R.string.pref_recipe_name_key), DEFAULT_STRING);
-        Timber.d("5 retrieveRecipe jkm: got recipe name = %s", recipeName);
+        Timber.d("5 retrieveRecipe got recipe name = %s", recipeName);
         String ingredientsListString = sharedPref.getString(
                 context.getString(R.string.pref_ingredients_key), DEFAULT_STRING);
         String stepsListString = sharedPref.getString(
@@ -115,9 +115,9 @@ public class SharedPrefUtils {
                     ingredientsList, stepsList, numServings, image);
 
             if (storedRecipe != null) {
-                Timber.d("jkm: retrieveRecipe : got name : %s", storedRecipe.getName());
+                Timber.d("retrieveRecipe : got name : %s", storedRecipe.getName());
                 if (storedRecipe.getIngredients() != null && storedRecipe.getIngredients().size() > 0) {
-                    Timber.d("jkm: we have %d number of ingredients ",
+                    Timber.d("we have %d number of ingredients ",
                             storedRecipe.getIngredients().size());
                 }
             }

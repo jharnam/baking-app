@@ -52,8 +52,8 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     public int getCount() {
         if (recipe != null && recipe.getIngredients() != null)
             return recipe.getIngredients().size();
-        Timber.d("jkm: getCount is 0");
-        if (recipe == null) Timber.e("jkm : Recipe is null");
+        Timber.d("getCount is 0");
+        if (recipe == null) Timber.e("Recipe is null");
         return 0;
     }
 
@@ -66,7 +66,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
      */
     @Override
     public RemoteViews getViewAt(int position) {
-        Timber.d("jkm1: inside getViewAt(), position is: %d", position);
+        Timber.d("inside getViewAt(), position is: %d", position);
         if (recipe == null || recipe.getIngredients() == null
                 || recipe.getIngredients().size() == 0) return null;
         List<Ingredient> ingredientsList = recipe.getIngredients();

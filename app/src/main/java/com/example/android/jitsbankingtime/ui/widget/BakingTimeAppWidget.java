@@ -41,7 +41,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-        Timber.d("jkm: updateAppWidget");
+        Timber.d("updateAppWidget");
 
         //get the data from the shared preferences
         SharedPreferences sharedPref = context.getSharedPreferences(
@@ -49,7 +49,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
 
         String recipeName = sharedPref.getString(
                 context.getString(R.string.pref_recipe_name_key), "CCC");
-        Timber.d("jkm: 1 got recipe name = %s", recipeName);
+        Timber.d("1 got recipe name = %s", recipeName);
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_baking_time);
@@ -74,7 +74,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
 
     private static RemoteViews getIngredientListRemoteViewsObj(Context context, int appWidgetId) {
         //Instantiate the RemoteViews object for the app widget layout.
-        Timber.d("jkm: getIngredientListRemoteViewsObj");
+        Timber.d("getIngredientListRemoteViewsObj");
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_baking_time);
         //Set up the intent that starts the WidgetListService, which will provide the views for
@@ -103,7 +103,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
 
     static void updateAppWidgetTitle(Context context, AppWidgetManager appWidgetManager,
                                      int appWidgetId) {
-        Timber.d("jkm: updateAppWidgetTitle");
+        Timber.d("updateAppWidgetTitle");
 
         RemoteViews views = getRecipeTitleRemoteViewsObj(context);
         // Instruct the widget manager to update the widget
@@ -113,7 +113,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
     }
 
     private static RemoteViews getRecipeTitleRemoteViewsObj(Context context) {
-        Timber.d("jkm: getRecipeTitleRemoteViewsObj");
+        Timber.d("getRecipeTitleRemoteViewsObj");
 
 
         //get the data from the shared preferences
@@ -122,7 +122,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
 
         String recipeName = sharedPref.getString(
                 context.getString(R.string.pref_recipe_name_key), "AAA");
-        Timber.d("2 jkm: got recipe name = %s", recipeName);
+        Timber.d("2 got recipe name = %s", recipeName);
         String ingredientsListString = sharedPref.getString(
                 context.getString(R.string.pref_ingredients_key), DEFAULT_STRING);
         String stepsListString = sharedPref.getString(
@@ -142,13 +142,13 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
         Intent intentToStartActivity;
         if (ingredientsListString.isEmpty() || stepsListString.isEmpty() ||
                 ingredientsListString.trim().equals("") || stepsListString.trim().equals("")) {
-            Timber.d("jkm: something is empty");
+            Timber.d("something is empty");
             Class destinationClass = MainActivity.class;
             intentToStartActivity = new Intent(context, destinationClass);
             views.setTextViewText(R.id.recipe_name_widget_tv1, context.getString(R.string.app_name));
 
         } else {
-            Timber.d("jkm: all data is available");
+            Timber.d("all data is available");
 
             List<Ingredient> ingredientsList = SharedPrefUtils.toListOfIngredients(ingredientsListString);
 
@@ -187,10 +187,10 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
 
         recipeName = sharedPref.getString(
                 context.getString(R.string.pref_recipe_name_key), "BBB");
-        Timber.d("3 jkm: got recipe name = %s", recipeName);
+        Timber.d("3 got recipe name = %s", recipeName);
         ingredientsListString = sharedPref.getString(
                 context.getString(R.string.pref_ingredients_key), DEFAULT_STRING);
-        Timber.d("jkm: ingredientsListString = %s", ingredientsListString);
+        Timber.d("ingredientsListString = %s", ingredientsListString);
         stepsListString = sharedPref.getString(
                 context.getString(R.string.pref_steps_key), DEFAULT_STRING);
         recipeId = sharedPref.getLong(
@@ -207,7 +207,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        Timber.d("jkm: onUpdate");
+        Timber.d("onUpdate");
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
@@ -217,7 +217,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
     /*
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        Timber.d("jkm: onUpdate");
+        Timber.d("onUpdate");
 
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
@@ -278,13 +278,13 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
 /*
     @Override
     public void onReceive(Context context, Intent intent) {
-        Timber.d("jkm: onReceive here");
+        Timber.d("onReceive here");
         retrieveDataFromSharedPreferences(context);
 
         int[] appWidgetIds = intent.getIntArrayExtra(EXTRA_APPWIDGET_IDS);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         if (appWidgetIds != null) {
-            Timber.d("jkm - appWidgetIds exist");
+            Timber.d("appWidgetIds exist");
             for (int appWidgetId : appWidgetIds) {
                 updateAppWidget1(context, appWidgetManager, recipeId, recipeName, ingredientsListString, appWidgetId);
             }
@@ -299,7 +299,7 @@ public class BakingTimeAppWidget extends AppWidgetProvider {
             //Do update
             int[] appWidgetIds = intent.getIntArrayExtra(EXTRA_APPWIDGET_IDS);
             if (appWidgetIds != null) {
-                Timber.d("jkm - appWidgetIds exist");
+                Timber.d("appWidgetIds exist");
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                 for (int appWidgetId : appWidgetIds) {
                     updateAppWidget(context, appWidgetManager, appWidgetId);
